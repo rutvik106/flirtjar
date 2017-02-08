@@ -14,5 +14,11 @@
     <string name="privacy_policy_label_1">We dont post anything to Facebook.</string>
     <string name="privacy_policy_label_2"> By signingin you agree to our <u><b>Tearms of services</b></u> and <u><b>Privacy policy.</b></u></string>
 
+    <string name="title_activity_nav_drawer">ActivityNavDrawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

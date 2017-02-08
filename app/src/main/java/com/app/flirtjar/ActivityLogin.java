@@ -198,7 +198,7 @@ public class ActivityLogin extends Activity implements FacebookCallback<LoginRes
         //CREATE NEW USER ON SERVER USING API
         Toast.makeText(this, "LOGIN SUCCESSFUL " + loginResult.getAccessToken().getToken(),
                 Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(ActivityLogin.this, ActivityHome.class));
+        startActivity(new Intent(ActivityLogin.this, ActivityNavDrawer.class));
 
     }
 

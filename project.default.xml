@@ -15,30 +15,32 @@
           <entry name="!?*.aj" />
         </wildcardResourcePatterns>
         <annotationProcessing>
-          <profile default="true" name="Default" enabled="false">
+          <profile name="Default" default="true" enabled="false">
             <processorPath useClasspath="true" />
           </profile>
         </annotationProcessing>
       </component>
       <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-        <OptionsSetting value="true" id="Add" />
-        <OptionsSetting value="true" id="Remove" />
-        <OptionsSetting value="true" id="Checkout" />
-        <OptionsSetting value="true" id="Update" />
-        <OptionsSetting value="true" id="Status" />
-        <OptionsSetting value="true" id="Edit" />
-        <ConfirmationsSetting value="0" id="Add" />
-        <ConfirmationsSetting value="0" id="Remove" />
+        <OptionsSetting id="Add" value="true" />
+        <OptionsSetting id="Remove" value="true" />
+        <OptionsSetting id="Checkout" value="true" />
+        <OptionsSetting id="Update" value="true" />
+        <OptionsSetting id="Status" value="true" />
+        <OptionsSetting id="Edit" value="true" />
+        <ConfirmationsSetting id="Add" value="0" />
+        <ConfirmationsSetting id="Remove" value="0" />
       </component>
-      <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="true" assert-keyword="false" jdk-15="false" />
+      <component name="ProjectRootManager" assert-keyword="false" default="true" jdk-15="false"
+          languageLevel="JDK_1_3" version="2" />
       <component name="PropertiesComponent">
         <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
         <property name="settings.editor.splitter.proportion" value="0.2" />
         <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
       </component>
       <component name="RunManager">
-        <configuration default="true" type="Application" factoryName="Application">
-          <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+        <configuration default="true" factoryName="Application" type="Application">
+          <extension name="coverage" enabled="false" merge="false" runner="idea"
+              sample_coverage="true" />
           <option name="MAIN_CLASS_NAME" />
           <option name="VM_PARAMETERS" />
           <option name="PROGRAM_PARAMETERS" />
@@ -52,7 +54,7 @@
           <envs />
           <method />
         </configuration>
-        <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+        <configuration name="&lt;template&gt;" default="true" selected="false" type="Applet">
           <option name="MAIN_CLASS_NAME" />
           <option name="HTML_FILE_NAME" />
           <option name="HTML_USED" value="false" />
@@ -61,7 +63,8 @@
           <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
           <option name="VM_PARAMETERS" />
         </configuration>
-        <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+        <configuration name="&lt;template&gt;" default="true" selected="false"
+            type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
           <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
         </configuration>
       </component>

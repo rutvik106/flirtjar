@@ -3,13 +3,14 @@
     package="com.app.flirtjar"
     android:installLocation="preferExternal">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -17,13 +18,6 @@
         android:resizeable="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".App"
@@ -68,7 +62,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ActivityHome" />
         </activity>
+        <activity
+            android:name=".ActivityNavDrawer"
+            android:label="@string/title_activity_nav_drawer"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
+        </activity>
     </application>
 
 </manifest>
