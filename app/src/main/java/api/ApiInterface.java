@@ -10,6 +10,7 @@ import apimodels.Gift;
 import apimodels.MatchedProfiles;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
+import apimodels.NotificationList;
 import apimodels.OnAddPicturesResponse;
 import apimodels.OtherPictures;
 import apimodels.Picture;
@@ -126,8 +127,8 @@ public interface ApiInterface
     interface Notifications
     {
         @GET("notifications/")
-        Call<ResponseBody> getNotifications(@Query("page") int page,
-                                            @Header(Constants.AUTHORIZATION) String token);
+        Call<NotificationList> getNotifications(@Query("page") int page,
+                                                @Header(Constants.AUTHORIZATION) String token);
 
         @PUT("notifications/{id}/markread/")
         Call<ResponseBody> markRead(@Path("id") String id,

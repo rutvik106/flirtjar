@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
     FloatingActionMenu famMeetUpTo;
     @BindView(R.id.fab_detour)
     FloatingActionButton fabDetour;
+    @BindView(R.id.fl_blackBackDrop)
+    FrameLayout flBlackBackDrop;
     Call<NearByUser> call;
     FusedLocation fusedLocation;
     private GoogleMap mMap;
@@ -88,9 +91,11 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 if (opened)
                 {
                     tvMeetUpTo.setVisibility(View.VISIBLE);
+                    flBlackBackDrop.setVisibility(View.VISIBLE);
                 } else
                 {
                     tvMeetUpTo.setVisibility(View.GONE);
+                    flBlackBackDrop.setVisibility(View.GONE);
                 }
             }
         });

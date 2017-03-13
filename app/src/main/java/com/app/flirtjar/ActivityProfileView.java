@@ -3,7 +3,9 @@ package com.app.flirtjar;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,9 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     @BindView(R.id.tv_userStatus)
     TextView tvUserStatus;
 
+    @BindView(R.id.ll_jarOptionsContainer)
+    LinearLayout llJarOptionsContainer;
+
     Call<User> call;
 
     User user;
@@ -54,9 +59,26 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     {
         super.onCreate(savedInstanceState);
 
+        final boolean isViewingSelfProfile = getIntent()
+                .getBooleanExtra(Constants.IS_VIEWING_SELF_PROFILE, false);
+
+
         final String token = SharedPreferences.getFlirtjarUserToken(this);
 
-        getProfileDetails(token);
+        if (isViewingSelfProfile)
+        {
+            llJarOptionsContainer.setVisibility(View.GONE);
+            getProfileDetails(token);
+        } else
+        {
+            llJarOptionsContainer.setVisibility(View.VISIBLE);
+            getOtherUserProfileDetails(getIntent().getStringExtra(Constants.USER_ID));
+        }
+    }
+
+    private void getOtherUserProfileDetails(String userId)
+    {
+        call = API.User.getUser(userId, new OnGetUserDetails(this));
     }
 
     private void getProfileDetails(final String token)

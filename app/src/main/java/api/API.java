@@ -6,6 +6,7 @@ import apimodels.CreatedUser;
 import apimodels.Gift;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
+import apimodels.NotificationList;
 import apimodels.UpdateUser;
 import apimodels.Views;
 import okhttp3.ResponseBody;
@@ -125,6 +126,19 @@ public class API
 
             return call;
         }
+
+        public static Call<NotificationList> getNotifications(int pageNo,
+                                                              String token,
+                                                              RetrofitCallback<NotificationList> callback)
+        {
+            Call<NotificationList> call = notifications.getNotifications(pageNo,
+                    token);
+
+            call.enqueue(callback);
+
+            return call;
+        }
+
 
     }
 

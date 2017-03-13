@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,10 +46,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapters.NotificationListAdapter;
 import api.API;
 import api.RetrofitCallback;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
+import apimodels.NotificationList;
 import apimodels.User;
 import apimodels.Views;
 import butterknife.BindView;
@@ -94,9 +98,9 @@ public class ActivityNavDrawer extends BaseActivity
 
     ActionBarDrawerToggle toggleLeft;
     View navigationViewHeaderLeft;
+    View navigationViewHeaderRight;
 
     ActionBarDrawerToggle toggleRight;
-    View navigationViewHeaderRight;
 
     TextView tvLikeCount;
     TextView tvVisitedCount;
@@ -104,6 +108,8 @@ public class ActivityNavDrawer extends BaseActivity
     TextView tvSkipCount;
 
     FusedLocation fusedLocation;
+
+    NotificationListAdapter notificationListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -144,6 +150,15 @@ public class ActivityNavDrawer extends BaseActivity
         drawer.setDrawerListener(toggleRight);
         toggleRight.syncState();
 
+        NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_viewRight);
+
+        navigationViewHeaderRight = navigationViewRight.getHeaderView(0);
+
+        final RecyclerView rvNotifications = (RecyclerView) navigationViewHeaderRight
+                .findViewById(R.id.rv_notifications);
+
+        setupRecyclerViewForNotifications(rvNotifications);
+
         toggleLeft = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -178,7 +193,9 @@ public class ActivityNavDrawer extends BaseActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(ActivityNavDrawer.this, ActivityProfileView.class));
+                Intent i = new Intent(ActivityNavDrawer.this, ActivityProfileView.class);
+                i.putExtra(Constants.IS_VIEWING_SELF_PROFILE, true);
+                startActivity(i);
             }
         });
 
@@ -200,6 +217,14 @@ public class ActivityNavDrawer extends BaseActivity
                 }
             }
         });
+    }
+
+    private void setupRecyclerViewForNotifications(RecyclerView rvNotifications)
+    {
+        notificationListAdapter = new NotificationListAdapter(this);
+        rvNotifications.setAdapter(notificationListAdapter);
+        rvNotifications.setHasFixedSize(true);
+        rvNotifications.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
@@ -255,12 +280,14 @@ public class ActivityNavDrawer extends BaseActivity
                         {
                             setupBottomBar(1);
                             getCurrentUser(flirtjarUserToken);
+                            getNotifications();
                         }
 
                     }
                 });
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+        parameters.putString("fields",
+                "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
         request.setParameters(parameters);
         request.executeAsync();
 
@@ -285,6 +312,34 @@ public class ActivityNavDrawer extends BaseActivity
 
         tvUsername.setText(Profile.getCurrentProfile().getFirstName());
 
+    }
+
+    private void getNotifications()
+    {
+        final RetrofitCallback<NotificationList> onGetNotificationList =
+                new RetrofitCallback<NotificationList>(this)
+                {
+                    @Override
+                    public void onResponse(Call<NotificationList> call,
+                                           Response<NotificationList> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            if (notificationListAdapter != null)
+                            {
+                                for (NotificationList.ResultBean notificationItem :
+                                        response.body().getResult())
+                                {
+                                    notificationListAdapter.addItem(notificationItem);
+                                }
+                            }
+                        }
+                    }
+                };
+
+        API.Notifications.getNotifications(1, SharedPreferences.getFlirtjarUserToken(this),
+                onGetNotificationList);
     }
 
 
@@ -411,7 +466,8 @@ public class ActivityNavDrawer extends BaseActivity
         }
         if (profile.getString("birthday") != null)
         {
-            user.setDob(DateTime.convertDate("dd/MM/yyyy", "yyyy-MM-dd", profile.getString("birthday")));
+            user.setDob(DateTime.convertDate("dd/MM/yyyy", "yyyy-MM-dd",
+                    profile.getString("birthday")));
         }
         user.setEmail(profile.getString("email"));
         user.setProfilePicture(profile.getString("profile_pic"));
@@ -472,7 +528,7 @@ public class ActivityNavDrawer extends BaseActivity
                     currentPage = position;
                     fragmentManager.beginTransaction()
                             .replace(R.id.fl_fragmentContainer, FragmentJar.newInstance())
-                            .commitNow();
+                            .commitNowAllowingStateLoss();
 
                 }
                 break;
@@ -616,7 +672,8 @@ public class ActivityNavDrawer extends BaseActivity
 
             try
             {
-                URL profile_pic = new URL("https://graph.facebook.com/" + id + "/picture?width=500&height=500");
+                URL profile_pic = new URL("https://graph.facebook.com/" + id +
+                        "/picture?width=500&height=500");
                 Log.i("profile_pic", profile_pic + "");
                 bundle.putString("profile_pic", profile_pic.toString());
 
@@ -671,7 +728,8 @@ public class ActivityNavDrawer extends BaseActivity
         @Override
         protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile)
         {
-            Toast.makeText(ActivityNavDrawer.this, "Profile Tracker Current Profile changed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityNavDrawer.this, "Profile Tracker Current Profile changed",
+                    Toast.LENGTH_SHORT).show();
             Logger.log(TAG, currentProfile.getFirstName());
             Logger.log(TAG, currentProfile.getLastName());
             Logger.log(TAG, currentProfile.getProfilePictureUri(200, 200).toString());

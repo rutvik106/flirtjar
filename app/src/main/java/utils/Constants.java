@@ -21,6 +21,8 @@ public class Constants
     public static final String FCM_DEVICE_TOKEN = "FCM_DEVICE_TOKEN";
 
     public static final String DEVICE_TYPE_ANDROID = "android";
+    public static final String IS_VIEWING_SELF_PROFILE = "IS_VIEWING_SELF_PROFILE";
+    public static final String USER_ID = "USER_ID";
 
     public static enum Gender
     {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="5dp"
+    android:background="#DEF2FB"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/iv_notificationIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginRight="10dp"
+        tools:src="@drawable/ic_like_gradient"/>
+
+    <TextView
+        android:id="@+id/tv_notificationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="1dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:text="Congratulations, you have got 1 free flirtcoin. Tap to claim"/>
+
+</LinearLayout>

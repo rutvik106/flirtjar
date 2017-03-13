@@ -14,6 +14,13 @@
         android:layout_height="match_parent"
         tools:context="fragments.FragmentMap"/>
 
+    <FrameLayout
+        android:id="@+id/fl_blackBackDrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone"/>
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fam_meetUpTo"
         android:layout_width="match_parent"
@@ -23,7 +30,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        fab:menu_backgroundColor="#99000000"
+        fab:menu_backgroundColor="#00000000"
         fab:menu_colorNormal="#3697DB"
         fab:menu_colorPressed="#2f86c4"
         fab:menu_colorRipple="#38a2ed"
@@ -97,5 +104,6 @@
         android:textSize="42sp"
         android:visibility="gone"
         tools:visibility="visible"/>
+
 
 </RelativeLayout>

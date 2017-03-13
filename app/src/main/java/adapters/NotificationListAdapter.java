@@ -7,25 +7,28 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import apimodels.NotificationList;
+import viewholders.VHSingleNotification;
+
 /**
  * Created by rutvik on 3/9/2017 at 1:37 PM.
  */
 
-class NotificationListAdapter<T> extends RecyclerView.Adapter
+public class NotificationListAdapter extends RecyclerView.Adapter
 {
 
 
-    final Context contest;
+    final Context context;
 
-    final List<T> itemList;
+    final List<NotificationList.ResultBean> itemList;
 
     public NotificationListAdapter(final Context context)
     {
-        this.contest = context;
+        this.context = context;
         itemList = new ArrayList<>();
     }
 
-    public void addItem(T item)
+    public void addItem(NotificationList.ResultBean item)
     {
         itemList.add(item);
         notifyItemInserted(itemList.size());
@@ -34,13 +37,14 @@ class NotificationListAdapter<T> extends RecyclerView.Adapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return null;
+        return VHSingleNotification.create(context, parent);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
-
+        VHSingleNotification.bind((VHSingleNotification) holder,
+                itemList.get(position));
     }
 
     @Override
