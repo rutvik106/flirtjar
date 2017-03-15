@@ -33,11 +33,11 @@ public class API
             return call;
         }
 
-        public static Call<UpdateUser> updateUserDetails(final CreateUser userInfo,
+        public static Call<UpdateUser> updateUserDetails(final apimodels.User.ResultBean user,
                                                          final String token,
                                                          final RetrofitCallback<UpdateUser> callback)
         {
-            Call<UpdateUser> call = users.updateUserDetails(userInfo, Constants.CONTENT_TYPE_JSON,
+            Call<UpdateUser> call = users.updateUserDetails(user, Constants.CONTENT_TYPE_JSON,
                     token);
             call.enqueue(callback);
             return call;

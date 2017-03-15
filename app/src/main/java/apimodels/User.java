@@ -112,9 +112,9 @@ public class User
         @SerializedName("status")
         private String status;
         @SerializedName("height")
-        private Object height;
+        private double height;
         @SerializedName("salary")
-        private Object salary;
+        private int salary;
         @SerializedName("country")
         private String country;
         @SerializedName("hair_color")
@@ -124,11 +124,11 @@ public class User
         @SerializedName("occupation")
         private String occupation;
         @SerializedName("drink")
-        private Object drink;
+        private boolean drink;
         @SerializedName("smoking")
-        private Object smoking;
+        private boolean smoking;
         @SerializedName("weed")
-        private Object weed;
+        private boolean weed;
         @SerializedName("aquarius")
         private String aquarius;
         @SerializedName("profile_picture")
@@ -155,6 +155,45 @@ public class User
         private List<?> language;
         @SerializedName("tags")
         private List<?> tags;
+
+        public static void copy(ResultBean user, ResultBean userToBeUpdated)
+        {
+            userToBeUpdated.setEyeColor(user.getEyeColor());
+            userToBeUpdated.setSalary(user.getSalary());
+            userToBeUpdated.setOccupation(user.getOccupation());
+            userToBeUpdated.setSmoking(user.getSmoking());
+            userToBeUpdated.setWeed(user.getWeed());
+            userToBeUpdated.setDrink(user.getDrink());
+            userToBeUpdated.setHairColor(user.getHairColor());
+            userToBeUpdated.setHeight(user.getHeight());
+            userToBeUpdated.setStatus(user.getStatus());
+            userToBeUpdated.setAquarius(user.getAquarius());
+            userToBeUpdated.setCountry(user.getCountry());
+            userToBeUpdated.setCreatedDate(user.getCreatedDate());
+            userToBeUpdated.setDob(user.getDob());
+            userToBeUpdated.setEmail(user.getEmail());
+            userToBeUpdated.setFirstName(user.getFirstName());
+            userToBeUpdated.setLastName(user.getLastName());
+            userToBeUpdated.setGender(user.getGender());
+            userToBeUpdated.setId(user.getId());
+            userToBeUpdated.setIsInstagramActivated(user.isIsInstagramActivated());
+            userToBeUpdated.setPhoneNo(user.getPhoneNo());
+            userToBeUpdated.setLastLogin(user.getLastLogin());
+            userToBeUpdated.setLocation(user.getLocation());
+            userToBeUpdated.setLookingFor(user.getLookingFor());
+            userToBeUpdated.setModifiedDate(user.getModifiedDate());
+            userToBeUpdated.setLikes(user.getLikes());
+            userToBeUpdated.setSuperlikes(user.getSuperlikes());
+            userToBeUpdated.setSkipped(user.getSkipped());
+            userToBeUpdated.setTagline(user.getTagline());
+            userToBeUpdated.setShowMeOnNearby(user.isShowMeOnNearby());
+            userToBeUpdated.setShowMeOnJar(user.isShowMeOnJar());
+            userToBeUpdated.setRelationshipStatus(user.getRelationshipStatus());
+            userToBeUpdated.setTags(user.getTags());
+            userToBeUpdated.setLanguage(user.getLanguage());
+            userToBeUpdated.setRating(user.getRating());
+            userToBeUpdated.setProfilePicture(user.getProfilePicture());
+        }
 
         public int getId()
         {
@@ -286,22 +325,22 @@ public class User
             this.status = status;
         }
 
-        public Object getHeight()
+        public double getHeight()
         {
             return height;
         }
 
-        public void setHeight(Object height)
+        public void setHeight(double height)
         {
             this.height = height;
         }
 
-        public Object getSalary()
+        public int getSalary()
         {
             return salary;
         }
 
-        public void setSalary(Object salary)
+        public void setSalary(int salary)
         {
             this.salary = salary;
         }
@@ -318,7 +357,7 @@ public class User
 
         public String getHairColor()
         {
-            return hairColor;
+            return hairColor != null ? hairColor : "";
         }
 
         public void setHairColor(String hairColor)
@@ -328,7 +367,7 @@ public class User
 
         public String getEyeColor()
         {
-            return eyeColor;
+            return eyeColor != null ? eyeColor : "";
         }
 
         public void setEyeColor(String eyeColor)
@@ -338,7 +377,7 @@ public class User
 
         public String getOccupation()
         {
-            return occupation;
+            return occupation != null ? occupation : "";
         }
 
         public void setOccupation(String occupation)
@@ -346,32 +385,32 @@ public class User
             this.occupation = occupation;
         }
 
-        public Object getDrink()
+        public boolean getDrink()
         {
             return drink;
         }
 
-        public void setDrink(Object drink)
+        public void setDrink(boolean drink)
         {
             this.drink = drink;
         }
 
-        public Object getSmoking()
+        public boolean getSmoking()
         {
             return smoking;
         }
 
-        public void setSmoking(Object smoking)
+        public void setSmoking(boolean smoking)
         {
             this.smoking = smoking;
         }
 
-        public Object getWeed()
+        public boolean getWeed()
         {
             return weed;
         }
 
-        public void setWeed(Object weed)
+        public void setWeed(boolean weed)
         {
             this.weed = weed;
         }

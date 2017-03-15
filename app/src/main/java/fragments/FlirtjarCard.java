@@ -5,9 +5,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.flirtjar.ActivityProfileView;
 import com.app.flirtjar.R;
 import com.bumptech.glide.Glide;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
+import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
@@ -57,13 +59,12 @@ public class FlirtjarCard
         tvCardUserFrom.setText(singleCardUser.getCountry());
     }
 
-    /**
-     * @Click(R.id.iv_cardUserImage) private void onClick()
-     * {
-     * Log.d("EVENT", "profileImageView click");
-     * mSwipeView.addView(this);
-     * }
-     */
+
+    @Click(R.id.iv_cardUserImage)
+    private void onClick()
+    {
+        ActivityProfileView.start(mContext, false, singleCardUser.getId() + "");
+    }
 
     @SwipeOut
     private void onSwipedOut()

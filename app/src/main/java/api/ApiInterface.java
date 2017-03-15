@@ -17,6 +17,7 @@ import apimodels.Picture;
 import apimodels.ReceivedGifts;
 import apimodels.SendChatMessage;
 import apimodels.SendGift;
+import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.User;
 import apimodels.Views;
@@ -48,7 +49,7 @@ public interface ApiInterface
                                      @Header(Constants.CONTENT_TYPE) String contentType);
 
         @PUT("users/me/")
-        Call<UpdateUser> updateUserDetails(@Body CreateUser user,
+        Call<UpdateUser> updateUserDetails(@Body User.ResultBean user,
                                            @Header(Constants.CONTENT_TYPE) String contentType,
                                            @Header(Constants.AUTHORIZATION) String token);
 
@@ -154,8 +155,8 @@ public interface ApiInterface
                                            @Header(Constants.AUTHORIZATION) String token);
 
         @POST("chat/")
-        Call<ResponseBody> sendChatMessage(@Body SendChatMessage chatMessage,
-                                           @Header(Constants.AUTHORIZATION) String token);
+        Call<SentMessage> sendChatMessage(@Body SendChatMessage chatMessage,
+                                          @Header(Constants.AUTHORIZATION) String token);
     }
 
 }

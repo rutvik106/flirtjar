@@ -1,6 +1,7 @@
 package com.app.flirtjar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,14 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     Call<User> call;
 
     User user;
+
+    public static void start(Context context, boolean isViewingSelf, String userId)
+    {
+        Intent i = new Intent(context, ActivityProfileView.class);
+        i.putExtra(Constants.IS_VIEWING_SELF_PROFILE, isViewingSelf);
+        i.putExtra(Constants.USER_ID, userId);
+        context.startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

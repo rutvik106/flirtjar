@@ -186,6 +186,16 @@ public class ActivityNavDrawer extends BaseActivity
         tvSkipCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_skipCount);
         tvUsername = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_username);
 
+        navigationViewHeaderLeft.findViewById(R.id.image_btn_edit)
+                .setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        ActivityEditProfile.start(ActivityNavDrawer.this);
+                    }
+                });
+
         ivProfilePicture = (ImageView) navigationViewHeaderLeft.findViewById(R.id.iv_profilePicture);
 
         ivProfilePicture.setOnClickListener(new View.OnClickListener()
@@ -193,9 +203,7 @@ public class ActivityNavDrawer extends BaseActivity
             @Override
             public void onClick(View view)
             {
-                Intent i = new Intent(ActivityNavDrawer.this, ActivityProfileView.class);
-                i.putExtra(Constants.IS_VIEWING_SELF_PROFILE, true);
-                startActivity(i);
+                ActivityProfileView.start(ActivityNavDrawer.this, true, null);
             }
         });
 
