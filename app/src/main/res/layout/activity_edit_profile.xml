@@ -51,7 +51,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/btn_saveProfile"
@@ -80,8 +80,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
+                    android:padding="12dp"
                     android:text="Edit Your Profile Details"
                     android:textSize="22sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spin_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:hint="Tag Line">
+
+                    <EditText
+                        android:id="@+id/tv_tagLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:lines="3"
+                        android:maxLength="160"/>
+
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -93,48 +121,54 @@
                         android:id="@+id/tv_height"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"/>
+                        android:inputType="numberDecimal"
+                        android:maxLength="4"/>
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="Locality">
+                    android:text="Aquarius"/>
 
-                    <EditText
-                        android:id="@+id/tv_locality"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spin_aquarius"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"/>
 
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="Hair Color">
+                    android:text="Hair Color"/>
 
-                    <EditText
-                        android:id="@+id/tv_hairColor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spin_hairColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"/>
 
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:hint="Eye Color">
+                    android:text="Eye Color"/>
 
-                    <EditText
-                        android:id="@+id/tv_eyeColor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spin_eyeColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"/>
 
-                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Looking For"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spin_lookingFor"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -145,7 +179,10 @@
                     <EditText
                         android:id="@+id/tv_occupation"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:lines="1"
+                        android:maxLines="1"/>
 
                 </android.support.design.widget.TextInputLayout>
 

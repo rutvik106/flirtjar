@@ -24,11 +24,12 @@ public class DateTime
             Date date = inDateFormat.parse(dateToBeConverted);
             SimpleDateFormat outDateFormat = new SimpleDateFormat(outputFormat, Locale.getDefault());
             convertedDate = outDateFormat.format(date);
+            Log.i(App.APP_TAG, "CONVERTED DATE: " + convertedDate);
+            return convertedDate;
         } catch (ParseException e)
         {
             e.printStackTrace();
+            return dateToBeConverted;
         }
-        Log.i(App.APP_TAG, "CONVERTED DATE: " + convertedDate);
-        return convertedDate;
     }
 }

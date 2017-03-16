@@ -5,14 +5,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import api.API;
 import api.RetrofitCallback;
@@ -22,23 +34,23 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
+import utils.Constants;
 import utils.SharedPreferences;
 
 public class ActivityEditProfile extends BaseActivity
 {
     final User.ResultBean userToBeUpdated = new User.ResultBean();
+    final List<Constants.HairColor> hairColor = new LinkedList<>();
+    final List<Constants.EyeColor> eyeColors = new LinkedList<>();
+    final List<Constants.Aquarius> aquariusList = new LinkedList<>();
+    final List<Constants.Gender> genderList = new LinkedList<>();
+    final List<Constants.Status> statusList = new LinkedList<>();
     @BindView(R.id.cl_activityEditProfile)
     CoordinatorLayout clActivityEditProfile;
     @BindView(R.id.btn_saveProfile)
     Button btnSaveProfile;
     @BindView(R.id.tv_height)
     EditText tvHeight;
-    @BindView(R.id.tv_locality)
-    EditText tvLocality;
-    @BindView(R.id.tv_hairColor)
-    EditText tvHairColor;
-    @BindView(R.id.tv_eyeColor)
-    EditText tvEyeColor;
     @BindView(R.id.tv_occupation)
     EditText tvOccupation;
     @BindView(R.id.tv_salary)
@@ -61,6 +73,29 @@ public class ActivityEditProfile extends BaseActivity
     RadioButton rbWeedNo;
     @BindView(R.id.rb_weed)
     RadioGroup rbWeed;
+    @BindView(R.id.spin_hairColor)
+    AppCompatSpinner spinHairColor;
+    @BindView(R.id.spin_eyeColor)
+    AppCompatSpinner spinEyeColor;
+    Constants.EyeColor selectedEyeColor;
+
+    Constants.HairColor selectedHairColor;
+
+    Constants.Gender selectedLookingFor;
+
+    Constants.Aquarius selectedAquarius;
+
+    Constants.Status selectedStatus;
+
+    @BindView(R.id.spin_aquarius)
+    AppCompatSpinner spinAquarius;
+    @BindView(R.id.spin_lookingFor)
+    AppCompatSpinner spinLookingFor;
+    @BindView(R.id.spin_status)
+    AppCompatSpinner spinStatus;
+
+    @BindView(R.id.tv_tagLine)
+    EditText tvTagLine;
 
     public static void start(Context context)
     {
@@ -80,6 +115,22 @@ public class ActivityEditProfile extends BaseActivity
 
         User.ResultBean.copy(user, userToBeUpdated);
 
+        setupRadioListeners();
+
+        setupSpinnersAndAdapters();
+
+        setDetailsFromUser();
+
+    }
+
+    @Override
+    protected int getLayoutResourceId()
+    {
+        return R.layout.activity_edit_profile;
+    }
+
+    private void setupRadioListeners()
+    {
         rbDrink.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
@@ -130,16 +181,405 @@ public class ActivityEditProfile extends BaseActivity
                 }
             }
         });
+    }
 
-        setDetailsFromUser();
+    private void setupSpinnersAndAdapters()
+    {
+        setupStatusSpinner();
+        setupAquariusSpinner();
+        setupLookingForSpinner();
+        setupEyeColorSpinner();
+        setupHairColorSpinner();
+    }
 
+    private void setupStatusSpinner()
+    {
+
+        if (userToBeUpdated.getStatus().equals(""))
+        {
+            statusList.add(Constants.Status.NONE);
+        }
+
+        statusList.add(Constants.Status.COFFEE);
+        statusList.add(Constants.Status.DETOUR);
+        statusList.add(Constants.Status.DINNER);
+        statusList.add(Constants.Status.LONG_DRIVE);
+        statusList.add(Constants.Status.LUNCH);
+        statusList.add(Constants.Status.MOVIE);
+        statusList.add(Constants.Status.WALK);
+
+        spinStatus.setAdapter(new ArrayAdapter<Constants.Status>(this, android.R.layout.simple_list_item_1, statusList)
+        {
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(statusList.get(position).getLabel());
+
+                return convertView;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(statusList.get(position).getLabel());
+
+                return convertView;
+            }
+        });
+
+        spinStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedStatus = (Constants.Status) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+
+        //[END]*************************************************************************************
+
+    }
+
+    private void setupAquariusSpinner()
+    {
+
+        //AQUARIUS SPINNER ADAPTER AND LISTENER***************************************************
+
+        if (userToBeUpdated.getAquarius().equals(""))
+        {
+            aquariusList.add(Constants.Aquarius.NONE);
+        }
+
+        aquariusList.add(Constants.Aquarius.Aquarius);
+        aquariusList.add(Constants.Aquarius.Aries);
+        aquariusList.add(Constants.Aquarius.Cancer);
+        aquariusList.add(Constants.Aquarius.Capricorn);
+        aquariusList.add(Constants.Aquarius.Gemini);
+        aquariusList.add(Constants.Aquarius.Leo);
+        aquariusList.add(Constants.Aquarius.Libra);
+        aquariusList.add(Constants.Aquarius.Pisces);
+        aquariusList.add(Constants.Aquarius.Sagittarius);
+        aquariusList.add(Constants.Aquarius.Scorpio);
+        aquariusList.add(Constants.Aquarius.Taurus);
+        aquariusList.add(Constants.Aquarius.Virgo);
+
+
+        spinAquarius.setAdapter(new ArrayAdapter<Constants.Aquarius>(this, android.R.layout.simple_list_item_1, aquariusList)
+        {
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(aquariusList.get(position).getLabel());
+
+                return convertView;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(aquariusList.get(position).getLabel());
+
+                return convertView;
+            }
+        });
+
+        spinAquarius.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedAquarius = (Constants.Aquarius) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+
+        //[END]*************************************************************************************
+
+    }
+
+    private void setupHairColorSpinner()
+    {
+        //HAIR COLOR SPINNER ADAPTER AND LISTENER***************************************************
+
+        if (userToBeUpdated.getHairColor().equals(""))
+        {
+            hairColor.add(Constants.HairColor.NONE);
+        }
+
+        hairColor.add(Constants.HairColor.BLACK);
+        hairColor.add(Constants.HairColor.BROWN);
+        hairColor.add(Constants.HairColor.BLUE);
+
+
+        spinHairColor.setAdapter(new ArrayAdapter<Constants.HairColor>(this, android.R.layout.simple_list_item_1, hairColor)
+        {
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(hairColor.get(position).getLabel());
+
+                return convertView;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(hairColor.get(position).getLabel());
+
+                return convertView;
+            }
+        });
+
+        spinHairColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedHairColor = (Constants.HairColor) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+
+        //[END]*************************************************************************************
+    }
+
+    private void setupEyeColorSpinner()
+    {
+        //EYE COLOR SPINNER ADAPTER AND LISTENER****************************************************
+
+        if (userToBeUpdated.getEyeColor().equals(""))
+        {
+            eyeColors.add(Constants.EyeColor.NONE);
+        }
+
+        eyeColors.add(Constants.EyeColor.BLACK);
+        eyeColors.add(Constants.EyeColor.BROWN);
+        eyeColors.add(Constants.EyeColor.BLUE);
+
+        spinEyeColor.setAdapter(new ArrayAdapter<Constants.EyeColor>(this, android.R.layout.simple_list_item_1, eyeColors)
+        {
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(eyeColors.get(position).getLabel());
+
+                return convertView;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(eyeColors.get(position).getLabel());
+
+                return convertView;
+            }
+        });
+
+        spinEyeColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedEyeColor = (Constants.EyeColor) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
+
+        //[END]*************************************************************************************
+    }
+
+    private void setupLookingForSpinner()
+    {
+        //LOOKING FOR SPINNER ADAPTER AND LISTENER****************************************************
+        if (userToBeUpdated.getLookingFor().equals(""))
+        {
+            genderList.add(Constants.Gender.NONE);
+        }
+        genderList.add(Constants.Gender.MALE);
+        genderList.add(Constants.Gender.FEMALE);
+        genderList.add(Constants.Gender.UNSPECIFIED);
+
+
+        spinLookingFor.setAdapter(new ArrayAdapter<Constants.Gender>(this, android.R.layout.simple_list_item_1, genderList)
+        {
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(genderList.get(position).getLabel());
+
+                return convertView;
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
+            {
+                if (convertView == null)
+                {
+                    convertView = LayoutInflater.from(parent.getContext())
+                            .inflate(android.R.layout.simple_list_item_1, parent, false);
+                }
+
+                TextView text1 = (TextView) convertView.findViewById(android.R.id.text1);
+                text1.setText(genderList.get(position).getLabel());
+
+                return convertView;
+            }
+        });
+
+        spinLookingFor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                selectedLookingFor = (Constants.Gender) adapterView.getAdapter().getItem(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView)
+            {
+
+            }
+        });
     }
 
     private void setDetailsFromUser()
     {
 
-        tvEyeColor.setText(userToBeUpdated.getEyeColor());
-        tvHairColor.setText(userToBeUpdated.getHairColor());
+        for (Constants.Status single : statusList)
+        {
+            if (userToBeUpdated.getStatus().equals(single.getValue()))
+            {
+                spinStatus.setSelection(statusList.indexOf(single));
+            }
+        }
+
+        for (Constants.Aquarius single : aquariusList)
+        {
+            if (userToBeUpdated.getAquarius().equals(single.getValue()))
+            {
+                spinAquarius.setSelection(aquariusList.indexOf(single));
+            }
+        }
+
+        for (Constants.Gender single : genderList)
+        {
+            if (userToBeUpdated.getLookingFor().equals(single.getValue()))
+            {
+                spinLookingFor.setSelection(genderList.indexOf(single));
+            }
+        }
+
+        for (Constants.EyeColor single : eyeColors)
+        {
+            if (userToBeUpdated.getEyeColor().equals(single.getValue()))
+            {
+                spinEyeColor.setSelection(eyeColors.indexOf(single));
+            }
+        }
+
+        for (Constants.HairColor single : hairColor)
+        {
+            if (userToBeUpdated.getHairColor().equals(single.getValue()))
+            {
+                spinHairColor.setSelection(hairColor.indexOf(single));
+            }
+        }
+
+        tvTagLine.setText(userToBeUpdated.getTagline());
         tvHeight.setText(userToBeUpdated.getHeight() + "");
         tvOccupation.setText(userToBeUpdated.getOccupation());
         tvSalary.setText(userToBeUpdated.getSalary() + "");
@@ -171,12 +611,6 @@ public class ActivityEditProfile extends BaseActivity
     }
 
     @Override
-    protected int getLayoutResourceId()
-    {
-        return R.layout.activity_edit_profile;
-    }
-
-    @Override
     protected void showNoInternetView()
     {
 
@@ -191,7 +625,7 @@ public class ActivityEditProfile extends BaseActivity
     private void promptUserToSaveProfileDetails()
     {
         new AlertDialog.Builder(this)
-                .setMessage("Save Profile Details")
+                .setMessage("Save Profile Details?")
                 .setPositiveButton("Save", new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -206,11 +640,21 @@ public class ActivityEditProfile extends BaseActivity
 
     private void trySavingProfileDetails()
     {
-        userToBeUpdated.setHeight(Double.valueOf(tvHeight.getText().toString()));
-        userToBeUpdated.setHairColor(tvHairColor.getText().toString());
-        userToBeUpdated.setEyeColor(tvEyeColor.getText().toString());
+        if (!tvHeight.getText().toString().trim().isEmpty())
+        {
+            userToBeUpdated.setHeight(Double.valueOf(tvHeight.getText().toString()));
+        }
+        userToBeUpdated.setStatus(selectedStatus.getValue());
+        userToBeUpdated.setAquarius(selectedAquarius.getValue());
+        userToBeUpdated.setLookingFor(selectedLookingFor.getValue());
+        userToBeUpdated.setHairColor(selectedHairColor.getValue());
+        userToBeUpdated.setEyeColor(selectedEyeColor.getValue());
         userToBeUpdated.setOccupation(tvOccupation.getText().toString());
-        userToBeUpdated.setSalary(Integer.valueOf(tvSalary.getText().toString()));
+        userToBeUpdated.setTagline(tvTagLine.getText().toString());
+        if (!tvSalary.getText().toString().trim().isEmpty())
+        {
+            userToBeUpdated.setSalary(Integer.valueOf(tvSalary.getText().toString()));
+        }
 
         final RetrofitCallback<UpdateUser> onUserDetailsUpdated = new RetrofitCallback<UpdateUser>(this)
         {
@@ -235,8 +679,32 @@ public class ActivityEditProfile extends BaseActivity
     {
         if (item.getItemId() == android.R.id.home)
         {
-            finish();
+            promptUserForExitConfirmation();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        promptUserForExitConfirmation();
+    }
+
+    private void promptUserForExitConfirmation()
+    {
+
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to go back? Any unsaved changes will be lost.")
+                .setPositiveButton("Go Back", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+
     }
 }

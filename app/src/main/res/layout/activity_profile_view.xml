@@ -119,12 +119,12 @@
                         tools:text="MALE / "/>
 
                     <TextView
-                        android:id="@+id/tv_userBioType"
+                        android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#333333"
                         android:textSize="16sp"
-                        tools:text="STRAIGHT"/>
+                        tools:text="DETOUR"/>
 
                 </LinearLayout>
 
@@ -136,7 +136,7 @@
                     tools:text="AHMEDABAD IND"/>
 
                 <TextView
-                    android:id="@+id/tv_userStatus"
+                    android:id="@+id/tv_userTagLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"

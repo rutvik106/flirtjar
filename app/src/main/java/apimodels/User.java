@@ -156,43 +156,43 @@ public class User
         @SerializedName("tags")
         private List<?> tags;
 
-        public static void copy(ResultBean user, ResultBean userToBeUpdated)
+        public static void copy(ResultBean src, ResultBean dest)
         {
-            userToBeUpdated.setEyeColor(user.getEyeColor());
-            userToBeUpdated.setSalary(user.getSalary());
-            userToBeUpdated.setOccupation(user.getOccupation());
-            userToBeUpdated.setSmoking(user.getSmoking());
-            userToBeUpdated.setWeed(user.getWeed());
-            userToBeUpdated.setDrink(user.getDrink());
-            userToBeUpdated.setHairColor(user.getHairColor());
-            userToBeUpdated.setHeight(user.getHeight());
-            userToBeUpdated.setStatus(user.getStatus());
-            userToBeUpdated.setAquarius(user.getAquarius());
-            userToBeUpdated.setCountry(user.getCountry());
-            userToBeUpdated.setCreatedDate(user.getCreatedDate());
-            userToBeUpdated.setDob(user.getDob());
-            userToBeUpdated.setEmail(user.getEmail());
-            userToBeUpdated.setFirstName(user.getFirstName());
-            userToBeUpdated.setLastName(user.getLastName());
-            userToBeUpdated.setGender(user.getGender());
-            userToBeUpdated.setId(user.getId());
-            userToBeUpdated.setIsInstagramActivated(user.isIsInstagramActivated());
-            userToBeUpdated.setPhoneNo(user.getPhoneNo());
-            userToBeUpdated.setLastLogin(user.getLastLogin());
-            userToBeUpdated.setLocation(user.getLocation());
-            userToBeUpdated.setLookingFor(user.getLookingFor());
-            userToBeUpdated.setModifiedDate(user.getModifiedDate());
-            userToBeUpdated.setLikes(user.getLikes());
-            userToBeUpdated.setSuperlikes(user.getSuperlikes());
-            userToBeUpdated.setSkipped(user.getSkipped());
-            userToBeUpdated.setTagline(user.getTagline());
-            userToBeUpdated.setShowMeOnNearby(user.isShowMeOnNearby());
-            userToBeUpdated.setShowMeOnJar(user.isShowMeOnJar());
-            userToBeUpdated.setRelationshipStatus(user.getRelationshipStatus());
-            userToBeUpdated.setTags(user.getTags());
-            userToBeUpdated.setLanguage(user.getLanguage());
-            userToBeUpdated.setRating(user.getRating());
-            userToBeUpdated.setProfilePicture(user.getProfilePicture());
+            dest.setEyeColor(src.getEyeColor());
+            dest.setSalary(src.getSalary());
+            dest.setOccupation(src.getOccupation());
+            dest.setSmoking(src.getSmoking());
+            dest.setWeed(src.getWeed());
+            dest.setDrink(src.getDrink());
+            dest.setHairColor(src.getHairColor());
+            dest.setHeight(src.getHeight());
+            dest.setStatus(src.getStatus());
+            dest.setAquarius(src.getAquarius());
+            dest.setCountry(src.getCountry());
+            dest.setCreatedDate(src.getCreatedDate());
+            dest.setDob(src.getDob());
+            dest.setEmail(src.getEmail());
+            dest.setFirstName(src.getFirstName());
+            dest.setLastName(src.getLastName());
+            dest.setGender(src.getGender());
+            dest.setId(src.getId());
+            dest.setIsInstagramActivated(src.isIsInstagramActivated());
+            dest.setPhoneNo(src.getPhoneNo());
+            dest.setLastLogin(src.getLastLogin());
+            dest.setLocation(src.getLocation());
+            dest.setLookingFor(src.getLookingFor());
+            dest.setModifiedDate(src.getModifiedDate());
+            dest.setLikes(src.getLikes());
+            dest.setSuperlikes(src.getSuperlikes());
+            dest.setSkipped(src.getSkipped());
+            dest.setTagline(src.getTagline());
+            dest.setShowMeOnNearby(src.isShowMeOnNearby());
+            dest.setShowMeOnJar(src.isShowMeOnJar());
+            dest.setRelationshipStatus(src.getRelationshipStatus());
+            dest.setTags(src.getTags());
+            dest.setLanguage(src.getLanguage());
+            dest.setRating(src.getRating());
+            dest.setProfilePicture(src.getProfilePicture());
         }
 
         public int getId()

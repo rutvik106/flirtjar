@@ -13,8 +13,8 @@
 
     <ImageButton
         android:id="@+id/ib_settings"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_gravity="right"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="20dp"

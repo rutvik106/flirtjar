@@ -44,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
+import utils.Constants;
 import utils.FusedLocation;
 import utils.SharedPreferences;
 
@@ -214,16 +215,16 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         final String status = nearByUser.getStatus();
         if (!status.isEmpty())
         {
-            if (status.contains("detour"))
+            if (status.equals(Constants.Status.DETOUR.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_detour);
             } else if (status.contains("out"))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_go_out);
-            } else if (status.contains("movie"))
+            } else if (status.equals(Constants.Status.MOVIE.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_movie);
-            } else if (status.contains("drunk"))
+            } else if (status.equals(Constants.Status.DRINK.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_drunk);
             } else if (status.contains("run"))

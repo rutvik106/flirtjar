@@ -28,13 +28,70 @@ public class Constants
 
     public enum Gender
     {
-        MALE("M"), FEMALE("F"), UNSPECIFIED("U");
+        MALE("M", "Male"), FEMALE("F", "Female"), UNSPECIFIED("U", "Unspecified"), NONE("", "Please Select");
 
         final String value;
+        final String label;
 
-        Gender(final String value)
+        Gender(final String value, final String label)
         {
             this.value = value;
+            this.label = label;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public String getLabel()
+        {
+            return label;
+        }
+    }
+
+    public enum Status
+    {
+        WALK("walk", "Walk"), COFFEE("coffee", "Coffee"), DRINK("drink", "Drink"),
+        LONG_DRIVE("long_drive", "Long Drive"), LUNCH("lunch", "Lunch"), DINNER("dinner", "Dinner"),
+        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Please Select");
+
+        final String value;
+        final String label;
+
+        Status(final String value, final String label)
+        {
+            this.value = value;
+            this.label = label;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public String getLabel()
+        {
+            return label;
+        }
+    }
+
+
+    public enum EyeColor
+    {
+        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Please Select");
+        final String value;
+        final String label;
+
+        EyeColor(final String value, final String label)
+        {
+            this.value = value;
+            this.label = label;
+        }
+
+        public String getLabel()
+        {
+            return label;
         }
 
         public String getValue()
@@ -43,54 +100,53 @@ public class Constants
         }
     }
 
-    public enum Status
-    {
-        WALK("walk"), COFFEE("coffee"), DRINK("drink"),
-        LONG_DRIVE("long_drive"), LUNCH("lunch"), DINNER("dinner"), DETOUR("detour"), MOVIE("movie");
-
-        final String value;
-
-        Status(final String value)
-        {
-            this.value = value;
-        }
-    }
-
-
-    public enum EyeColor
-    {
-        BLACK("bl"), BROWN("br"), BLUE("bu");
-        final String value;
-
-        EyeColor(final String value)
-        {
-            this.value = value;
-        }
-    }
-
     public enum HairColor
     {
-        BLACK("bl"), BROWN("br"), BLUE("bu");
+        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Please Select");
         final String value;
+        final String label;
 
-        HairColor(final String value)
+        HairColor(final String value, final String label)
         {
             this.value = value;
+            this.label = label;
+        }
+
+        public String getLabel()
+        {
+            return label;
+        }
+
+        public String getValue()
+        {
+            return value;
         }
     }
 
     public enum Aquarius
     {
-        Aries("ar"), Taurus("ta"), Gemini("ge"),
-        Cancer("ca"), Leo("le"), Virgo("vi"), Libra("li"),
-        Scorpio("sc"), Sagittarius("sa"), Capricorn("cp"),
-        Aquarius("aq"), Pisces("pi");
+        Aries("ar", "Aries"), Taurus("ta", "Taurus"), Gemini("ge", "Gemini"),
+        Cancer("ca", "Cancer"), Leo("le", "Leo"), Virgo("vi", "Virgo"), Libra("li", "Libra"),
+        Scorpio("sc", "Scorpio"), Sagittarius("sa", "Sagittarius"), Capricorn("cp", "Capricorn"),
+        Aquarius("aq", "Aquarius"), Pisces("pi", "Pisces"), NONE("", "Please Select");
 
         final String value;
+        final String label;
 
-        Aquarius(final String value)
+        Aquarius(final String value, final String label)
         {
             this.value = value;
+            this.label = label;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public String getLabel()
+        {
+            return label;
         }
     }
 
