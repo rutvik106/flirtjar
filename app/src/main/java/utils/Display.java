@@ -9,11 +9,10 @@ import android.util.DisplayMetrics;
 
 public class Display
 {
-    public static int calculateNoOfColumns(Context context)
+    public static int calculateNoOfColumns(Context context, int height)
     {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 100);
-        return noOfColumns;
+        return (int) (dpWidth / height);
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.ChatUser;
+import apimodels.MatchedProfiles;
 import viewholders.VHSingleChatUser;
 
 /**
@@ -19,7 +19,7 @@ public class ChatListAdapter extends RecyclerView.Adapter
 
     private final Context context;
 
-    private final List<ChatUser> chatUserList;
+    private final List<MatchedProfiles.ResultBean> chatUserList;
 
     public ChatListAdapter(Context context)
     {
@@ -27,7 +27,7 @@ public class ChatListAdapter extends RecyclerView.Adapter
         chatUserList = new ArrayList<>();
     }
 
-    public void addChatUser(ChatUser chatUser)
+    public void addChatUser(MatchedProfiles.ResultBean chatUser)
     {
         chatUserList.add(chatUser);
         notifyItemInserted(chatUserList.size());
@@ -42,7 +42,7 @@ public class ChatListAdapter extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
-        VHSingleChatUser.bind((VHSingleChatUser) holder);
+        VHSingleChatUser.bind((VHSingleChatUser) holder, chatUserList.get(position));
     }
 
     @Override

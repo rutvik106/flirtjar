@@ -1,8 +1,6 @@
 package com.app.flirtjar;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -11,18 +9,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import utils.NetworkConnectionDetector;
 
 /**
  * Created by rutvik on 3/3/2017 at 11:49 PM.
  */
 
-public abstract class BaseActivity extends AppCompatActivity
+public abstract class BaseActivity extends AppCompatActivity implements NetworkConnectionDetector.ConnectivityReceiverListener
 {
+
+    private static final String TAG = App.APP_TAG + BaseActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -30,14 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity
     @BindView(R.id.tv_navLogoText)
     TextView tvNavLogoText;
 
-    private BroadcastReceiver mNetworkDetectReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            checkInternetConnection();
-        }
-    };
+    private NetworkConnectionDetector networkConnectionDetector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -62,34 +57,68 @@ public abstract class BaseActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("");
-
-        registerReceiver(mNetworkDetectReceiver,
-                new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        IntentFilter i = new IntentFilter();
+        i.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        networkConnectionDetector = new NetworkConnectionDetector();
+        registerReceiver(networkConnectionDetector, i);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        NetworkConnectionDetector.connectivityReceiverListener = this;
+        checkInternet();
+    }
+
 
     protected abstract int getLayoutResourceId();
 
-
-    private void checkInternetConnection()
+    @Override
+    protected void onStop()
     {
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = manager.getActiveNetworkInfo();
-
-        if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED)
+        if (networkConnectionDetector != null)
         {
+            unregisterReceiver(networkConnectionDetector);
+        }
+        super.onStop();
+    }
 
+    public void checkInternet()
+    {
+        final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected())
+        {
+            internetAvailable();
         } else
         {
-            showNoInternetView();
+            internetNotAvailable();
         }
     }
 
-    protected abstract void showNoInternetView();
-
     @Override
-    protected void onDestroy()
+    public void onNetworkConnectionChanged(boolean isConnected)
     {
-        unregisterReceiver(mNetworkDetectReceiver);
-        super.onDestroy();
+        if (isConnected)
+        {
+            Log.i(TAG, "CONNECTED>>>");
+            internetAvailable();
+        } else
+        {
+            Log.i(TAG, "<<<DISCONNECTED");
+            internetNotAvailable();
+        }
     }
+
+    protected abstract void internetNotAvailable();
+
+    protected abstract void internetAvailable();
+
 }

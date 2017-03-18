@@ -181,8 +181,39 @@ public class ActivityNavDrawer extends BaseActivity
                 });
 
         tvLikeCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_likeCount);
+        navigationViewHeaderLeft.findViewById(R.id.ll_viewLikes).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                ActivityUsersGrid.start(ActivityNavDrawer.this, ActivityUsersGrid.Purpose.VIEW_LIKES);
+            }
+        });
+
+
+
         tvVisitedCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_visitedCount);
+        navigationViewHeaderLeft.findViewById(R.id.ll_viewVisited)
+                .setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        ActivityUsersGrid.start(ActivityNavDrawer.this, ActivityUsersGrid.Purpose.VIEW_VISITED);
+                    }
+                });
+
         tvSuperlikeCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_superlikeCount);
+        navigationViewHeaderLeft.findViewById(R.id.ll_viewSuperlike).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                ActivityUsersGrid.start(ActivityNavDrawer.this, ActivityUsersGrid.Purpose.VIEW_SUPERLIKES);
+            }
+        });
+
+
         tvSkipCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_skipCount);
         tvUsername = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_username);
 
@@ -242,9 +273,15 @@ public class ActivityNavDrawer extends BaseActivity
     }
 
     @Override
-    protected void showNoInternetView()
+    protected void internetNotAvailable()
     {
-        Log.i(TAG, "");
+
+    }
+
+    @Override
+    protected void internetAvailable()
+    {
+
     }
 
     private void getFacebookAuthToken()

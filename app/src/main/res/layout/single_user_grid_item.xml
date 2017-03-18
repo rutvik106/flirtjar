@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/iv_gridUserImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"/>
+
+    <FrameLayout
+        android:id="@+id/fl_itemLockedView"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:alpha="0.7"
+            android:background="@drawable/pink_round"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_lock_white_48dp"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

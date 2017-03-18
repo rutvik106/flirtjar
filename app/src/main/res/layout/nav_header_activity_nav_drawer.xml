@@ -57,6 +57,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_viewLikes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -101,6 +102,7 @@
         android:background="#cccccc"/>
 
     <LinearLayout
+        android:id="@+id/ll_viewVisited"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -145,6 +147,7 @@
         android:background="#cccccc"/>
 
     <LinearLayout
+        android:id="@+id/ll_viewSuperlike"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"

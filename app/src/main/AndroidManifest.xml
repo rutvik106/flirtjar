@@ -79,6 +79,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -96,6 +97,14 @@
             android:name=".ActivityEditProfile"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing">
+        </activity>
+        <activity
+            android:name=".ActivityUsersGrid"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ActivityChat"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -7,6 +7,7 @@ import apimodels.Coins;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.Gift;
+import apimodels.GridUsers;
 import apimodels.MatchedProfiles;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
@@ -95,6 +96,27 @@ public interface ApiInterface
         Call<Views> getViews(@Path("id") String userId,
                              @Header(Constants.AUTHORIZATION) String token);
 
+        @GET("profile/view/user/{id}/")
+        Call<GridUsers> getViewUsers(@Path("id") int userId,
+                                     @Query("response") int viewType,
+                                     @Header(Constants.AUTHORIZATION) String token);
+
+        enum ResponseType
+        {
+            LIKES(0), SKIPPED(1), SUPERLIKE(2), VIEWS(3);
+
+            final int value;
+
+            ResponseType(final int value)
+            {
+                this.value = value;
+            }
+
+            public int getValue()
+            {
+                return value;
+            }
+        }
 
     }
 

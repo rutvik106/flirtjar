@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.synnapps.carouselview.CarouselView;
@@ -20,6 +19,8 @@ import api.API;
 import api.RetrofitCallback;
 import apimodels.User;
 import butterknife.BindView;
+import butterknife.OnClick;
+import dialogs.DialogSendGifts;
 import retrofit2.Call;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -117,11 +118,16 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
     }
 
+    @Override
+    protected void internetNotAvailable()
+    {
+
+    }
 
     @Override
-    protected void showNoInternetView()
+    protected void internetAvailable()
     {
-        Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -302,6 +308,22 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     protected void attachBaseContext(Context newBase)
     {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @OnClick({R.id.ibtn_dislike, R.id.ibtn_gift, R.id.ibtn_like})
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.ibtn_dislike:
+                break;
+            case R.id.ibtn_gift:
+                DialogSendGifts gifts = new DialogSendGifts(this);
+                gifts.show();
+                break;
+            case R.id.ibtn_like:
+                break;
+        }
     }
 
     class OnGetUserDetails extends RetrofitCallback<User>

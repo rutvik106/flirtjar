@@ -4,9 +4,13 @@ import apimodels.Cards;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.Gift;
+import apimodels.GridUsers;
+import apimodels.MatchedProfiles;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
 import apimodels.NotificationList;
+import apimodels.SendChatMessage;
+import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.Views;
 import okhttp3.ResponseBody;
@@ -84,6 +88,25 @@ public class API
             return call;
         }
 
+        public static Call<GridUsers> getViewUsers(final int userId,
+                                                   final ApiInterface.Profile.ResponseType response,
+                                                   final String token,
+                                                   final RetrofitCallback<GridUsers> callback)
+        {
+            Call<GridUsers> call = profile.getViewUsers(userId, response.getValue(), token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<MatchedProfiles> getMatchedProfiles(final int page,
+                                                               final String token,
+                                                               final RetrofitCallback<MatchedProfiles> callback)
+        {
+            Call<MatchedProfiles> call = profile.getMatchedProfiles(page, token);
+            call.enqueue(callback);
+            return call;
+        }
+
 
     }
 
@@ -150,6 +173,24 @@ public class API
         public static Call<Gift> getGifts(int page, String token, RetrofitCallback<Gift> callback)
         {
             Call<Gift> call = gifts.getGifts(page, token);
+
+            call.enqueue(callback);
+
+            return call;
+        }
+
+    }
+
+    public static class Chat
+    {
+        public static ApiInterface.Chat chat = ApiClient.getClient()
+                .create(ApiInterface.Chat.class);
+
+        public static Call<SentMessage> sendChatMessage(final SendChatMessage message,
+                                                        final String token,
+                                                        final RetrofitCallback<SentMessage> callback)
+        {
+            Call<SentMessage> call = chat.sendChatMessage(message, token);
 
             call.enqueue(callback);
 

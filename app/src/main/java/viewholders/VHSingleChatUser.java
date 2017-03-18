@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.flirtjar.ActivityChat;
 import com.app.flirtjar.R;
 import com.bumptech.glide.Glide;
 
+import apimodels.MatchedProfiles;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dialogs.PurchaseDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -33,6 +34,8 @@ public class VHSingleChatUser extends RecyclerView.ViewHolder
     @BindView(R.id.tv_chatUserLastMessage)
     TextView tvChatUserLastMessage;
 
+    MatchedProfiles.ResultBean matchedUser;
+
     public VHSingleChatUser(final Context context, View itemView)
     {
         super(itemView);
@@ -45,8 +48,7 @@ public class VHSingleChatUser extends RecyclerView.ViewHolder
             @Override
             public void onClick(View view)
             {
-                PurchaseDialog pd = new PurchaseDialog(context);
-                pd.show();
+                ActivityChat.start(context, matchedUser.getId(), matchedUser.getFirstName());
             }
         });
 
@@ -58,13 +60,17 @@ public class VHSingleChatUser extends RecyclerView.ViewHolder
                 .inflate(R.layout.single_chat_user_item, parent, false));
     }
 
-    public static void bind(final VHSingleChatUser vh)
+    public static void bind(final VHSingleChatUser vh, MatchedProfiles.ResultBean matchedUser)
     {
+        vh.matchedUser = matchedUser;
+
         Glide.with(vh.context)
-                .load(R.drawable.sample_girl)
+                .load(matchedUser.getProfilePicture())
                 .bitmapTransform(new CropCircleTransformation(vh.context))
                 .crossFade()
                 .into(vh.ivChatUserImage);
+
+        vh.tvChatUserName.setText(matchedUser.getFirstName());
     }
 
 }

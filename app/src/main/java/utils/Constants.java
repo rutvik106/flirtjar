@@ -25,6 +25,7 @@ public class Constants
     public static final String IS_VIEWING_SELF_PROFILE = "IS_VIEWING_SELF_PROFILE";
 
     public static final String USER_ID = "USER_ID";
+    public static final String CHAT_CONTACT_NAME = "CHAT_CONTACT_NAME";
 
     public enum Gender
     {

@@ -62,7 +62,7 @@ public class DialogSendGifts extends Dialog
 
         adapter = new GiftGridListAdapter(getContext());
 
-        int noOfColumns = Display.calculateNoOfColumns(getContext());
+        int noOfColumns = Display.calculateNoOfColumns(getContext(), 100);
 
         rvGifts.setLayoutManager(new GridLayoutManager(getContext(), noOfColumns));
         rvGifts.setHasFixedSize(true);

@@ -611,7 +611,13 @@ public class ActivityEditProfile extends BaseActivity
     }
 
     @Override
-    protected void showNoInternetView()
+    protected void internetNotAvailable()
+    {
+
+    }
+
+    @Override
+    protected void internetAvailable()
     {
 
     }

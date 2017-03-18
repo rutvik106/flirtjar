@@ -13,9 +13,14 @@ import android.view.ViewGroup;
 import com.app.flirtjar.R;
 
 import adapters.ChatListAdapter;
+import api.API;
+import api.RetrofitCallback;
+import apimodels.MatchedProfiles;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import models.ChatUser;
+import retrofit2.Call;
+import retrofit2.Response;
+import utils.SharedPreferences;
 
 /**
  * Created by rutvik on 2/5/2017 at 4:13 PM.
@@ -31,6 +36,8 @@ public class FragmentChat extends Fragment
     SearchView svSearchChat;
 
     ChatListAdapter adapter;
+
+    Call<MatchedProfiles> call;
 
     public static FragmentChat newInstance()
     {
@@ -52,13 +59,61 @@ public class FragmentChat extends Fragment
 
         rvChatList.setAdapter(adapter);
 
-        addDummyData();
+        getChatList();
 
         return view;
     }
 
-    private void addDummyData()
+    private void getChatList()
     {
-        adapter.addChatUser(new ChatUser("Nidhi"));
+        final RetrofitCallback<MatchedProfiles> onGetChatList =
+                new RetrofitCallback<MatchedProfiles>(getContext())
+                {
+                    @Override
+                    public void onResponse(Call<MatchedProfiles> call, Response<MatchedProfiles> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            for (MatchedProfiles.ResultBean user : response.body().getResult())
+                            {
+                                adapter.addChatUser(user);
+                            }
+                        }
+                    }
+                };
+
+        call = API.Profile.getMatchedProfiles(1, SharedPreferences.getFlirtjarUserToken(getContext()),
+                onGetChatList);
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        if (call != null)
+        {
+            call.cancel();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach()
+    {
+        if (call != null)
+        {
+            call.cancel();
+        }
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        if (call != null)
+        {
+            call.cancel();
+        }
+        super.onDestroy();
     }
 }

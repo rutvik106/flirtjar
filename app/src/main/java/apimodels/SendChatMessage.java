@@ -17,18 +17,18 @@ public class SendChatMessage
      */
 
     @SerializedName("user_to")
-    private String userTo;
+    private int userTo;
     @SerializedName("message_text")
     private String messageText;
     @SerializedName("user_from")
-    private String userFrom;
+    private int userFrom;
 
-    public String getUserTo()
+    public int getUserTo()
     {
         return userTo;
     }
 
-    public void setUserTo(String userTo)
+    public void setUserTo(int userTo)
     {
         this.userTo = userTo;
     }
@@ -43,12 +43,12 @@ public class SendChatMessage
         this.messageText = messageText;
     }
 
-    public String getUserFrom()
+    public int getUserFrom()
     {
         return userFrom;
     }
 
-    public void setUserFrom(String userFrom)
+    public void setUserFrom(int userFrom)
     {
         this.userFrom = userFrom;
     }
