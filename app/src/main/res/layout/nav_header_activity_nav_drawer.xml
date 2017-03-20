@@ -28,7 +28,8 @@
     <FrameLayout
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:visibility="gone">
 
 
         <ImageView
@@ -237,6 +238,33 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:background="#cccccc"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_connectInsta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/insta_logo"/>
+
+        <TextView
+            fontPath="fonts/Righteous-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Connect "
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

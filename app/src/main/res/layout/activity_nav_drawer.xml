@@ -21,7 +21,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_activity_nav_drawer"
-        tools:visibility="gone"/>
+        tools:visibility="visible"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_viewRight"

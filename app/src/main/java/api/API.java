@@ -13,6 +13,8 @@ import apimodels.SendChatMessage;
 import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.Views;
+import instagram.InstaConstants;
+import instagram.apimodels.AuthorizedUser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import utils.Constants;
@@ -197,6 +199,24 @@ public class API
             return call;
         }
 
+    }
+
+    public static class Instagram
+    {
+        public static ApiInterface.Instagram instagram = ApiClient.getClientForInsta()
+                .create(ApiInterface.Instagram.class);
+
+        public static Call<AuthorizedUser> getAccessToken(final String requestToken,
+                                                          final RetrofitCallback<AuthorizedUser> callback)
+        {
+            Call<AuthorizedUser> call = instagram.getAccessToken(InstaConstants.CLIENT_ID,
+                    InstaConstants.CLIENT_SECRET, InstaConstants.GRANT_TYPE,
+                    InstaConstants.CALLBACKURL, requestToken);
+
+            call.enqueue(callback);
+
+            return call;
+        }
     }
 
 }

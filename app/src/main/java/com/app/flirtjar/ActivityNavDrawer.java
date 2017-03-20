@@ -58,6 +58,7 @@ import butterknife.BindView;
 import fragments.FragmentChat;
 import fragments.FragmentJar;
 import fragments.FragmentMap;
+import instagram.dialogs.InstagramLoginDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -170,6 +171,18 @@ public class ActivityNavDrawer extends BaseActivity
 
         navigationViewHeaderLeft = navigationView.getHeaderView(0);
 
+        navigationViewHeaderLeft.findViewById(R.id.ll_connectInsta)
+                .setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        final InstagramLoginDialog instaDialog =
+                                new InstagramLoginDialog(ActivityNavDrawer.this);
+                        instaDialog.show();
+                    }
+                });
+
         navigationViewHeaderLeft.findViewById(R.id.ib_settings)
                 .setOnClickListener(new View.OnClickListener()
                 {
@@ -189,7 +202,6 @@ public class ActivityNavDrawer extends BaseActivity
                 ActivityUsersGrid.start(ActivityNavDrawer.this, ActivityUsersGrid.Purpose.VIEW_LIKES);
             }
         });
-
 
 
         tvVisitedCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_visitedCount);

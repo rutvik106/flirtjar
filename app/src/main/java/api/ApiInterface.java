@@ -22,9 +22,13 @@ import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.User;
 import apimodels.Views;
+import instagram.InstaConstants;
+import instagram.apimodels.AuthorizedUser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -179,6 +183,17 @@ public interface ApiInterface
         @POST("chat/")
         Call<SentMessage> sendChatMessage(@Body SendChatMessage chatMessage,
                                           @Header(Constants.AUTHORIZATION) String token);
+    }
+
+    interface Instagram
+    {
+        @FormUrlEncoded
+        @POST(InstaConstants.tokenURLString)
+        Call<AuthorizedUser> getAccessToken(@Field("client_id") String clientId,
+                                            @Field("client_secret") String clientSecret,
+                                            @Field("grant_type") String grantType,
+                                            @Field("redirect_uri") String redirectUri,
+                                            @Field("code") String code);
     }
 
 }
