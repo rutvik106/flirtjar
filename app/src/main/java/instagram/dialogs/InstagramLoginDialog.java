@@ -60,10 +60,13 @@ public class InstagramLoginDialog extends Dialog
         wvInstaLogin.setWebViewClient(new AuthWebViewClient());
         wvInstaLogin.getSettings().setJavaScriptEnabled(true);
         wvInstaLogin.loadUrl(authURLString);
-        wvInstaLogin.clearCache(true);
-        CookieSyncManager.createInstance(getContext());
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookie();
+        if (!App.getInstance().getUser().getResult().isIsInstagramActivated())
+        {
+            wvInstaLogin.clearCache(true);
+            CookieSyncManager.createInstance(getContext());
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+        }
     }
 
     class AuthWebViewClient extends WebViewClient
@@ -79,8 +82,8 @@ public class InstagramLoginDialog extends Dialog
                 request_token = parts[1];  //This is your request token.
                 InstagramLoginDialog.this.dismiss();
                 Log.i(TAG, "REQUEST TOKEN: " + request_token);
-                final ShowUserPhotosDialog instaUserDialog =
-                        new ShowUserPhotosDialog(getContext(), request_token);
+                final ShowUserDetailsDialog instaUserDialog =
+                        new ShowUserDetailsDialog(getContext(), request_token);
                 instaUserDialog.show();
                 return true;
             } else

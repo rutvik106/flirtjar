@@ -1,5 +1,7 @@
 package api;
 
+import java.util.List;
+
 import apimodels.Cards;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
@@ -9,12 +11,16 @@ import apimodels.MatchedProfiles;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
 import apimodels.NotificationList;
+import apimodels.OnAddPicturesResponse;
+import apimodels.OtherPictures;
+import apimodels.Picture;
 import apimodels.SendChatMessage;
 import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.Views;
 import instagram.InstaConstants;
 import instagram.apimodels.AuthorizedUser;
+import instagram.apimodels.RecentMedia;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import utils.Constants;
@@ -109,6 +115,25 @@ public class API
             return call;
         }
 
+        public static Call<OtherPictures> getOtherPictures(final int pageNo,
+                                                           final String token,
+                                                           final RetrofitCallback<OtherPictures> callback)
+        {
+            Call<OtherPictures> call = profile.getOtherPictures(pageNo,
+                    token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<OnAddPicturesResponse> addPictures(final List<Picture> pictures,
+                                                              final String token,
+                                                              final RetrofitCallback<OnAddPicturesResponse> callback)
+        {
+            Call<OnAddPicturesResponse> call = profile.addPictures(pictures, Constants.CONTENT_TYPE_JSON,
+                    token);
+            call.enqueue(callback);
+            return call;
+        }
 
     }
 
@@ -217,6 +242,17 @@ public class API
 
             return call;
         }
+
+        public static Call<RecentMedia> getRecentMedia(final String accessToken,
+                                                       final RetrofitCallback<RecentMedia> callback)
+        {
+            Call<RecentMedia> call = instagram.getRecentMedia(accessToken);
+
+            call.enqueue(callback);
+
+            return call;
+        }
+
     }
 
 }

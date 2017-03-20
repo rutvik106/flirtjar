@@ -65,20 +65,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    tools:text="Rutvik Mehta"/>
+                    tools:text="Rutvik Mehta Bio"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_instaDone"
-            style="@style/Widget.AppCompat.Button.Colored"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_instaUserDetailsContainer"
-            android:layout_margin="10dp"
-            android:text="DONE"/>
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_linkInstaPhotos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Add Photos"/>
+
+            <Button
+                android:id="@+id/btn_instaDone"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="DONE"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

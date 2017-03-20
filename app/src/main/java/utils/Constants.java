@@ -26,6 +26,7 @@ public class Constants
 
     public static final String USER_ID = "USER_ID";
     public static final String CHAT_CONTACT_NAME = "CHAT_CONTACT_NAME";
+    public static final String INSTA_ACCESS_TOKEN = "INSTA_ACCESS_TOKEN";
 
     public enum Gender
     {

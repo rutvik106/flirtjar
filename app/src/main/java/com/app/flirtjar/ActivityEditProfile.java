@@ -32,6 +32,7 @@ import apimodels.UpdateUser;
 import apimodels.User;
 import butterknife.BindView;
 import butterknife.OnClick;
+import instagram.dialogs.UserPhotosDialog;
 import retrofit2.Call;
 import retrofit2.Response;
 import utils.Constants;
@@ -96,6 +97,8 @@ public class ActivityEditProfile extends BaseActivity
 
     @BindView(R.id.tv_tagLine)
     EditText tvTagLine;
+    @BindView(R.id.btn_addInstagramPhotos)
+    Button btnAddInstagramPhotos;
 
     public static void start(Context context)
     {
@@ -712,5 +715,11 @@ public class ActivityEditProfile extends BaseActivity
                 .setNegativeButton("Cancel", null)
                 .show();
 
+    }
+
+    @OnClick(R.id.btn_addInstagramPhotos)
+    public void addInstagramPhotos()
+    {
+        new UserPhotosDialog(this).show();
     }
 }

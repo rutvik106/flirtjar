@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_instaPhoto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"/>
+
+    <FrameLayout
+        android:id="@+id/fl_instaSelectedPhoto"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:alpha="0.4"
+            android:background="#333333"/>
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_done_white_48dp"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

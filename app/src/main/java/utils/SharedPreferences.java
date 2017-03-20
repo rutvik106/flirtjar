@@ -53,6 +53,19 @@ public class SharedPreferences
                 .apply();
     }
 
+    public static void setInstaAccessToken(Context context, String token)
+    {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(Constants.INSTA_ACCESS_TOKEN, token)
+                .apply();
+    }
+
+    public static String getInstaAccessToken(Context context)
+    {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(Constants.INSTA_ACCESS_TOKEN, null);
+    }
 
     public static class Settings
     {

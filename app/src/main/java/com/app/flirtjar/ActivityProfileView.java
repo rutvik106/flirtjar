@@ -15,8 +15,12 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import com.wefika.flowlayout.FlowLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import api.API;
 import api.RetrofitCallback;
+import apimodels.OtherPictures;
 import apimodels.User;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,29 +35,22 @@ import utils.SharedPreferences;
 public class ActivityProfileView extends BaseActivity implements ImageListener
 {
 
+    final List<OtherPictures.ResultBean> otherPictures = new ArrayList<>();
     @BindView(R.id.carouselView)
     CarouselView carouselView;
-
     @BindView(R.id.tv_userName)
     TextView tvUserName;
-
     @BindView(R.id.tv_userAge)
     TextView tvUserAge;
-
     @BindView(R.id.tv_userGender)
     TextView tvUserGender;
-
     @BindView(R.id.tv_userStateCountry)
     TextView tvUserStateCountry;
-
     @BindView(R.id.tv_userTagLine)
     TextView tvUserTagLine;
-
     @BindView(R.id.ll_jarOptionsContainer)
     LinearLayout llJarOptionsContainer;
-
     Call<User> call;
-
     User user;
     @BindView(R.id.tv_status)
     TextView tvStatus;
@@ -136,7 +133,7 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         if (user != null)
         {
             Glide.with(this)
-                    .load(user.getResult().getProfilePicture())
+                    .load(otherPictures.get(position).getImage())
                     .into(imageView);
         }
     }
@@ -145,9 +142,10 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     {
         this.user = user;
 
-        carouselView.setImageListener(this);
+        final OtherPictures.ResultBean img = new OtherPictures.ResultBean();
+        img.setImage(user.getResult().getProfilePicture());
 
-        carouselView.setPageCount(2);
+        otherPictures.add(img);
 
         final User.ResultBean result = user.getResult();
 
@@ -326,6 +324,40 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         }
     }
 
+    private void getOtherImages()
+    {
+        API.Profile.getOtherPictures(1, SharedPreferences.getFlirtjarUserToken(this),
+                new RetrofitCallback<OtherPictures>(this)
+                {
+                    @Override
+                    public void onResponse(Call<OtherPictures> call, Response<OtherPictures> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            for (OtherPictures.ResultBean image : response.body().getResult())
+                            {
+                                otherPictures.add(image);
+                            }
+                            carouselView.setImageListener(ActivityProfileView.this);
+                            carouselView.setPageCount(otherPictures.size());
+                        } else
+                        {
+                            carouselView.setImageListener(ActivityProfileView.this);
+                            carouselView.setPageCount(otherPictures.size());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OtherPictures> call, Throwable t)
+                    {
+                        super.onFailure(call, t);
+                        carouselView.setImageListener(ActivityProfileView.this);
+                        carouselView.setPageCount(otherPictures.size());
+                    }
+                });
+    }
+
     class OnGetUserDetails extends RetrofitCallback<User>
     {
         public OnGetUserDetails(Context context)
@@ -340,6 +372,7 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
             if (response.isSuccessful())
             {
+                getOtherImages();
                 bindUserDetailsToUi(response.body());
             }
 

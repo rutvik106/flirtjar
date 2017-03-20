@@ -24,6 +24,7 @@ import apimodels.User;
 import apimodels.Views;
 import instagram.InstaConstants;
 import instagram.apimodels.AuthorizedUser;
+import instagram.apimodels.RecentMedia;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -194,6 +195,9 @@ public interface ApiInterface
                                             @Field("grant_type") String grantType,
                                             @Field("redirect_uri") String redirectUri,
                                             @Field("code") String code);
+
+        @GET("v1/users/self/media/recent")
+        Call<RecentMedia> getRecentMedia(@Query("access_token") String accessToken);
     }
 
 }

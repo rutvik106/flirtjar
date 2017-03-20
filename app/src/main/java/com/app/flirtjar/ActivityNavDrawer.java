@@ -1,6 +1,7 @@
 package com.app.flirtjar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -52,6 +54,7 @@ import api.RetrofitCallback;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.NotificationList;
+import apimodels.UpdateUser;
 import apimodels.User;
 import apimodels.Views;
 import butterknife.BindView;
@@ -177,9 +180,7 @@ public class ActivityNavDrawer extends BaseActivity
                     @Override
                     public void onClick(View view)
                     {
-                        final InstagramLoginDialog instaDialog =
-                                new InstagramLoginDialog(ActivityNavDrawer.this);
-                        instaDialog.show();
+                        tryLinkingInstagramAccount();
                     }
                 });
 
@@ -268,6 +269,63 @@ public class ActivityNavDrawer extends BaseActivity
                 }
             }
         });
+    }
+
+    private void tryLinkingInstagramAccount()
+    {
+        if (App.getInstance().getUser().getResult().isIsInstagramActivated() &&
+                SharedPreferences.getInstaAccessToken(this) != null)
+        {
+            new AlertDialog.Builder(this)
+                    .setMessage("You have already Linked Instagram, Do you want to Unlink?")
+                    .setPositiveButton("Unlink", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            unlinkInstagram(dialogInterface);
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        } else
+        {
+            new InstagramLoginDialog(ActivityNavDrawer.this).show();
+        }
+    }
+
+    private void unlinkInstagram(final DialogInterface dialogInterface)
+    {
+        App.getInstance().getUser().getResult().setIsInstagramActivated(false);
+        API.User.updateUserDetails(App.getInstance().getUser().getResult(),
+                SharedPreferences.getFlirtjarUserToken(this),
+                new RetrofitCallback<UpdateUser>(this)
+                {
+                    @Override
+                    public void onResponse(Call<UpdateUser> call, Response<UpdateUser> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            SharedPreferences.setInstaAccessToken(ActivityNavDrawer.this, null);
+                            Toast.makeText(ActivityNavDrawer.this, "Successfully Unlinked.", Toast.LENGTH_SHORT).show();
+                        } else
+                        {
+                            App.getInstance().getUser().getResult().setIsInstagramActivated(true);
+                            Toast.makeText(ActivityNavDrawer.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                        }
+                        dialogInterface.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<UpdateUser> call, Throwable t)
+                    {
+                        super.onFailure(call, t);
+                        App.getInstance().getUser().getResult().setIsInstagramActivated(true);
+                        Toast.makeText(ActivityNavDrawer.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                });
     }
 
     private void setupRecyclerViewForNotifications(RecyclerView rvNotifications)
