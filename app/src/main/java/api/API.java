@@ -3,6 +3,7 @@ package api;
 import java.util.List;
 
 import apimodels.Cards;
+import apimodels.ChatMessages;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.Gift;
@@ -212,6 +213,17 @@ public class API
     {
         public static ApiInterface.Chat chat = ApiClient.getClient()
                 .create(ApiInterface.Chat.class);
+
+        public static Call<ChatMessages> getChatMessages(final int fromUserId,
+                                                         final String token,
+                                                         final RetrofitCallback<ChatMessages> callback)
+        {
+            Call<ChatMessages> call = chat.getChatMessages(fromUserId, token);
+
+            call.enqueue(callback);
+
+            return call;
+        }
 
         public static Call<SentMessage> sendChatMessage(final SendChatMessage message,
                                                         final String token,

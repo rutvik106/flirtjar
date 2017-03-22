@@ -413,7 +413,7 @@ public class ActivityNavDrawer extends BaseActivity
                 .into(ivProfilePicture);
 
         Glide.with(this)
-                .load(Profile.getCurrentProfile().getProfilePictureUri(80, 80))
+                .load(Profile.getCurrentProfile().getProfilePictureUri(90, 90))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(new SimpleTarget<GlideDrawable>()

@@ -5,16 +5,15 @@
     android:id="@+id/ll_chatMessageContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="8dp"
-    tools:gravity="right"
-    tools:ignore="RtlHardcoded">
+    tools:gravity="left">
 
     <RelativeLayout
         android:id="@+id/rl_messageContentContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/chat_bubble_self"
+        android:background="@drawable/chat_bubble_friend"
         android:paddingBottom="12dp"
         android:paddingRight="10dp">
 
@@ -25,6 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginBottom="5dp"
             android:textColor="#f1f1f1"
+            android:textSize="12sp"
             tools:text="User 2"/>
 
         <TextView
@@ -32,13 +32,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_chatUserName"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:maxWidth="250dp"
             android:textColor="#ffffff"
             android:textSize="16sp"
             tools:text="Test message"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_chatMsgTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="-4dp"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        tools:text="8:30 AM"/>
 
 </LinearLayout>

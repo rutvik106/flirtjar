@@ -3,6 +3,7 @@ package api;
 import java.util.List;
 
 import apimodels.Cards;
+import apimodels.ChatMessages;
 import apimodels.Coins;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
@@ -178,7 +179,7 @@ public interface ApiInterface
     interface Chat
     {
         @GET("chat/")
-        Call<ResponseBody> getChatMessages(@Query("user_from") int userId,
+        Call<ChatMessages> getChatMessages(@Query("user_from") int userId,
                                            @Header(Constants.AUTHORIZATION) String token);
 
         @POST("chat/")

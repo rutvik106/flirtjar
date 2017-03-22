@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import adapters.ChatMessagesAdapter;
 import api.API;
 import api.RetrofitCallback;
+import apimodels.ChatMessages;
 import apimodels.SendChatMessage;
 import apimodels.SentMessage;
 import butterknife.BindView;
@@ -69,6 +70,47 @@ public class ActivityChat extends BaseActivity
         adapter = new ChatMessagesAdapter(this);
         rvChatConversation.setAdapter(adapter);
 
+        getChatMessages();
+
+    }
+
+    private void getChatMessages()
+    {
+        final RetrofitCallback<ChatMessages> onGetChatMessages =
+                new RetrofitCallback<ChatMessages>(this)
+                {
+                    @Override
+                    public void onResponse(Call<ChatMessages> call, Response<ChatMessages> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            for (ChatMessages.ResultBean chatMessage : response.body().getResult())
+                            {
+                                final SentMessage.ResultBean msg = new SentMessage.ResultBean();
+                                msg.setId(chatMessage.getId());
+                                msg.setMessageText(chatMessage.getMessageText());
+                                msg.setSentAt(chatMessage.getSentAt());
+                                msg.setUserFrom(chatMessage.getUserFrom().getId());
+                                msg.setUserTo(chatMessage.getUserTo().getId());
+                                adapter.addItem(msg);
+                            }
+                        } else
+                        {
+                            Toast.makeText(ActivityChat.this, "Failed to get chat messages.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ChatMessages> call, Throwable t)
+                    {
+                        super.onFailure(call, t);
+                        Toast.makeText(ActivityChat.this, "Failed to get chat messages.", Toast.LENGTH_SHORT).show();
+                    }
+                };
+
+        API.Chat.getChatMessages(chatContactId, SharedPreferences.getFlirtjarUserToken(this),
+                onGetChatMessages);
     }
 
     @Override
