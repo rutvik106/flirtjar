@@ -67,7 +67,7 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     @BindView(R.id.ibtn_like)
     ImageButton ibtnLike;
 
-    public static void start(Context context, boolean isViewingSelf, String userId)
+    public static void start(Context context, boolean isViewingSelf, int userId)
     {
         Intent i = new Intent(context, ActivityProfileView.class);
         i.putExtra(Constants.IS_VIEWING_SELF_PROFILE, isViewingSelf);
@@ -99,11 +99,11 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         } else
         {
             llJarOptionsContainer.setVisibility(View.VISIBLE);
-            getOtherUserProfileDetails(getIntent().getStringExtra(Constants.USER_ID));
+            getOtherUserProfileDetails(getIntent().getIntExtra(Constants.USER_ID, 0));
         }
     }
 
-    private void getOtherUserProfileDetails(String userId)
+    private void getOtherUserProfileDetails(int userId)
     {
         call = API.User.getUser(userId, new OnGetUserDetails(this));
     }
@@ -170,6 +170,10 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         setStatus(result);
 
         TextView lookingFor = new TextView(this);
+        /*Drawable lookingForImg = getResources().getDrawable(R.drawable.looking_for);
+        lookingForImg.setBounds( 0, 0, 60, 60 );*/
+        lookingFor.setCompoundDrawablesWithIntrinsicBounds(R.drawable.looking_for, 0, 0, 0);
+        lookingFor.setCompoundDrawablePadding(10);
         for (Constants.Gender g : Constants.Gender.values())
         {
             if (result.getLookingFor().equals(g.getValue()))

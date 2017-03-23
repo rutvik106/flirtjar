@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.net.HttpURLConnection;
 
@@ -22,6 +25,7 @@ import apimodels.SendChatMessage;
 import apimodels.SentMessage;
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Response;
 import utils.Constants;
@@ -30,7 +34,7 @@ import utils.SharedPreferences;
 public class ActivityChat extends BaseActivity
 {
 
-    String chatContactName;
+    String chatContactName, chatContactProfilePicture;
     int chatContactId;
     @BindView(R.id.et_chatMessageBody)
     EditText etChatMessageBody;
@@ -43,15 +47,20 @@ public class ActivityChat extends BaseActivity
     @BindView(R.id.cl_activityEditProfile)
     CoordinatorLayout clActivityEditProfile;
 
+    @BindView(R.id.iv_chatUserProfilePicture)
+    ImageView ivChatUserProfilePicture;
+
     ChatMessagesAdapter adapter;
 
     Call<SentMessage> call;
 
-    public static void start(final Context context, final int userId, final String chatContactName)
+    public static void start(final Context context, final int userId, final String chatContactName,
+                             final String profilePicture)
     {
         final Intent i = new Intent(context, ActivityChat.class);
         i.putExtra(Constants.CHAT_CONTACT_NAME, chatContactName);
         i.putExtra(Constants.USER_ID, userId);
+        i.putExtra(Constants.USER_PROFILE_PICTURE, profilePicture);
         context.startActivity(i);
     }
 
@@ -62,6 +71,12 @@ public class ActivityChat extends BaseActivity
 
         chatContactName = getIntent().getStringExtra(Constants.CHAT_CONTACT_NAME);
         chatContactId = getIntent().getIntExtra(Constants.USER_ID, 0);
+        chatContactProfilePicture = getIntent().getStringExtra(Constants.USER_PROFILE_PICTURE);
+
+        Glide.with(this)
+                .load(chatContactProfilePicture)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(ivChatUserProfilePicture);
 
         tvNavLogoText.setText(chatContactName);
 
@@ -93,6 +108,22 @@ public class ActivityChat extends BaseActivity
                                 msg.setSentAt(chatMessage.getSentAt());
                                 msg.setUserFrom(chatMessage.getUserFrom().getId());
                                 msg.setUserTo(chatMessage.getUserTo().getId());
+                                if (chatMessage.getUserFrom().getId() == App.getInstance().getUser()
+                                        .getResult().getId())
+                                {
+                                    msg.setFirstName(App.getInstance().getUser().getResult().getFirstName());
+                                } else
+                                {
+                                    msg.setFirstName(chatContactName);
+                                }
+                                if (chatMessage.getUserTo().getId() == App.getInstance().getUser()
+                                        .getResult().getId())
+                                {
+                                    msg.setFirstName(App.getInstance().getUser().getResult().getFirstName());
+                                } else
+                                {
+                                    msg.setFirstName(chatContactName);
+                                }
                                 adapter.addItem(msg);
                             }
                         } else

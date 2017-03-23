@@ -1,7 +1,6 @@
 package fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +40,8 @@ public class FragmentJar extends Fragment
 
     public static final String TAG = App.APP_TAG + FragmentJar.class.getSimpleName();
     private final Handler mHandler = new Handler();
+    public boolean cardWasDisliked = false;
+    public boolean cardWasSuperliked = false;
     @BindView(R.id.ibtn_like)
     ImageButton ibtnLike;
     @BindView(R.id.ibtn_dislike)
@@ -51,27 +52,28 @@ public class FragmentJar extends Fragment
     ImageButton ibReturn;
     @BindView(R.id.ibtn_gift)
     ImageButton ibtnGift;
-
     @BindView(R.id.iv_loadingGif)
     ImageView ivLoadingGif;
-
-
     Call<Cards> call;
+    FlirtjarCard.SwipeEventListener swipeEventListener;
+    FragmentJarCallbacks fragmentJarCallbacks;
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
     private Cards cards;
-    private ProgressDialog mProgressDialog;
 
-    public static FragmentJar newInstance()
+    public static FragmentJar newInstance(FlirtjarCard.SwipeEventListener swipeEventListener,
+                                          FragmentJarCallbacks fragmentJarCallbacks)
     {
-        return new FragmentJar();
+        FragmentJar fragmentJar = new FragmentJar();
+        fragmentJar.swipeEventListener = swipeEventListener;
+        fragmentJar.fragmentJarCallbacks = fragmentJarCallbacks;
+        return fragmentJar;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -119,7 +121,6 @@ public class FragmentJar extends Fragment
 
     public void getFlirtCards()
     {
-
         final String token = SharedPreferences.getFlirtjarUserToken(getActivity());
         if (token == null)
         {
@@ -131,7 +132,6 @@ public class FragmentJar extends Fragment
         }
         final RetrofitCallback<Cards> onGetCards = new RetrofitCallback<Cards>(getActivity())
         {
-
             @Override
             public void onResponse(Call<Cards> call, final Response<Cards> response)
             {
@@ -149,18 +149,12 @@ public class FragmentJar extends Fragment
                             {
                                 cards.getResult().addAll(response.body().getResult());
                             }
-
-                            mHandler.post(new Runnable()
+                            for (Cards.ResultBean singleCard : cards.getResult())
                             {
-                                @Override
-                                public void run()
-                                {
-                                    for (Cards.ResultBean singleCard : cards.getResult())
-                                    {
-                                        mSwipeView.addView(new FlirtjarCard(getActivity(), singleCard, mSwipeView));
-                                    }
-                                }
-                            });
+                                mSwipeView.addView(new FlirtjarCard(getActivity(),
+                                        singleCard, mSwipeView, swipeEventListener));
+                            }
+
                         }
                     }
                 }
@@ -187,24 +181,33 @@ public class FragmentJar extends Fragment
     @OnClick(R.id.ibtn_like)
     public void like()
     {
+        cardWasDisliked = false;
+        cardWasSuperliked = false;
         mSwipeView.doSwipe(true);
     }
 
     @OnClick(R.id.ibtn_dislike)
     public void dislike()
     {
+        cardWasDisliked = true;
+        cardWasSuperliked = false;
         mSwipeView.doSwipe(false);
     }
 
     @OnClick(R.id.ib_return)
     public void putBack()
     {
-        mSwipeView.undoLastSwipe();
+        if (cardWasDisliked)
+        {
+            mSwipeView.undoLastSwipe();
+        }
     }
 
     @OnClick(R.id.ibtn_super_like)
     public void superLike()
     {
+        cardWasDisliked = false;
+        cardWasSuperliked = true;
         Toast.makeText(mContext, "Superliked", Toast.LENGTH_SHORT).show();
         mSwipeView.doSwipe(true);
     }
@@ -216,27 +219,6 @@ public class FragmentJar extends Fragment
         sendGifts.show();
     }
 
-
-    private void showProgressDialog()
-    {
-        if (mProgressDialog == null)
-        {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setMessage("Loading...");
-        }
-
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog()
-    {
-        if (mProgressDialog != null && mProgressDialog.isShowing())
-        {
-            mProgressDialog.hide();
-        }
-    }
-
     @Override
     public void onDestroy()
     {
@@ -246,4 +228,26 @@ public class FragmentJar extends Fragment
         }
         super.onDestroy();
     }
+
+    @Override
+    public void onDestroyView()
+    {
+        fragmentJarCallbacks.onDestroyView();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach()
+    {
+        fragmentJarCallbacks.onDetach();
+        super.onDetach();
+    }
+
+    public interface FragmentJarCallbacks
+    {
+        void onDestroyView();
+
+        void onDetach();
+    }
+
 }

@@ -53,6 +53,7 @@ public class SentMessage
          * user_to : 1
          */
 
+
         @SerializedName("id")
         private int id;
         @SerializedName("message_text")
@@ -63,6 +64,18 @@ public class SentMessage
         private int userFrom;
         @SerializedName("user_to")
         private int userTo;
+        /**
+         * first_name : Rutvik
+         * last_name : Mehta
+         * profile_picture : https://graph.facebook.com/1467849723226234/picture?width=500&height=500
+         */
+
+        @SerializedName("first_name")
+        private String firstName;
+        @SerializedName("last_name")
+        private String lastName;
+        @SerializedName("profile_picture")
+        private String profilePicture;
 
         public int getId()
         {
@@ -112,6 +125,36 @@ public class SentMessage
         public void setUserTo(int userTo)
         {
             this.userTo = userTo;
+        }
+
+        public String getFirstName()
+        {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName)
+        {
+            this.firstName = firstName;
+        }
+
+        public String getLastName()
+        {
+            return lastName;
+        }
+
+        public void setLastName(String lastName)
+        {
+            this.lastName = lastName;
+        }
+
+        public String getProfilePicture()
+        {
+            return profilePicture;
+        }
+
+        public void setProfilePicture(String profilePicture)
+        {
+            this.profilePicture = profilePicture;
         }
     }
 }

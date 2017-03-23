@@ -54,15 +54,18 @@ import api.RetrofitCallback;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.NotificationList;
+import apimodels.ResponseOnCard;
 import apimodels.UpdateUser;
 import apimodels.User;
 import apimodels.Views;
 import butterknife.BindView;
+import fragments.FlirtjarCard;
 import fragments.FragmentChat;
 import fragments.FragmentJar;
 import fragments.FragmentMap;
 import instagram.dialogs.InstagramLoginDialog;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -75,10 +78,12 @@ import utils.SharedPreferences;
 
 public class ActivityNavDrawer extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener, GoogleApiClient.OnConnectionFailedListener
+        View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
+        FlirtjarCard.SwipeEventListener, FragmentJar.FragmentJarCallbacks
 {
 
     private static final String TAG = App.APP_TAG + ActivityNavDrawer.class.getSimpleName();
+    final List<ResponseOnCard> responseOnCards = new ArrayList<>();
     private final Handler mHandler = new Handler();
     FragmentManager fragmentManager;
     @BindView(R.id.btn_nearby)
@@ -96,24 +101,20 @@ public class ActivityNavDrawer extends BaseActivity
     TextView tvUsername;
     ImageView ivProfilePicture;
     int currentPage = -1;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-
     ActionBarDrawerToggle toggleLeft;
     View navigationViewHeaderLeft;
     View navigationViewHeaderRight;
-
     ActionBarDrawerToggle toggleRight;
-
     TextView tvLikeCount;
     TextView tvVisitedCount;
     TextView tvSuperlikeCount;
     TextView tvSkipCount;
-
     FusedLocation fusedLocation;
-
     NotificationListAdapter notificationListAdapter;
+    FragmentJar fragmentJar = null;
+    Call<ResponseBody> callSaveResponseOnCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -247,7 +248,7 @@ public class ActivityNavDrawer extends BaseActivity
             @Override
             public void onClick(View view)
             {
-                ActivityProfileView.start(ActivityNavDrawer.this, true, null);
+                ActivityProfileView.start(ActivityNavDrawer.this, true, 0);
             }
         });
 
@@ -631,6 +632,7 @@ public class ActivityNavDrawer extends BaseActivity
                 if (currentPage != position)
                 {
                     currentPage = position;
+                    fragmentJar = null;
                     fragmentManager.beginTransaction()
                             .replace(R.id.fl_fragmentContainer, new FragmentMap())
                             .commitAllowingStateLoss();
@@ -641,8 +643,9 @@ public class ActivityNavDrawer extends BaseActivity
                 if (currentPage != position)
                 {
                     currentPage = position;
+                    fragmentJar = FragmentJar.newInstance(this, this);
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fl_fragmentContainer, FragmentJar.newInstance())
+                            .replace(R.id.fl_fragmentContainer, fragmentJar)
                             .commitNowAllowingStateLoss();
 
                 }
@@ -652,6 +655,7 @@ public class ActivityNavDrawer extends BaseActivity
                 if (currentPage != position)
                 {
                     currentPage = position;
+                    fragmentJar = null;
                     fragmentManager.beginTransaction()
                             .replace(R.id.fl_fragmentContainer, FragmentChat.newInstance())
                             .commitAllowingStateLoss();
@@ -836,6 +840,88 @@ public class ActivityNavDrawer extends BaseActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult)
     {
 
+    }
+
+    @Override
+    public void onSwipeIn(FlirtjarCard card)
+    {
+        fragmentJar.cardWasDisliked = false;
+        fragmentJar.cardWasSuperliked = false;
+        final ResponseOnCard responseOnCard = new ResponseOnCard();
+        responseOnCard.setUserFrom(App.getInstance().getUser().getResult().getId());
+        responseOnCard.setUserTo(card.getSingleCardUser().getId());
+        if (fragmentJar.cardWasSuperliked)
+        {
+            responseOnCard.setResponse(ResponseOnCard.SUPERLIKE);
+        } else
+        {
+            responseOnCard.setResponse(ResponseOnCard.LIKE);
+        }
+        responseOnCards.add(responseOnCard);
+        if (responseOnCards.size() > 8)
+        {
+            trySavingResponseOnCards();
+        }
+    }
+
+    @Override
+    public void onSwipeOut(FlirtjarCard card)
+    {
+        fragmentJar.cardWasDisliked = true;
+        fragmentJar.cardWasSuperliked = false;
+        final ResponseOnCard responseOnCard = new ResponseOnCard();
+        responseOnCard.setUserFrom(App.getInstance().getUser().getResult().getId());
+        responseOnCard.setUserTo(card.getSingleCardUser().getId());
+        responseOnCard.setResponse(ResponseOnCard.SKIPPED);
+        responseOnCards.add(responseOnCard);
+        if (responseOnCards.size() > 8)
+        {
+            trySavingResponseOnCards();
+        }
+    }
+
+    private void trySavingResponseOnCards()
+    {
+        if (callSaveResponseOnCard != null)
+        {
+            callSaveResponseOnCard.cancel();
+        }
+        final RetrofitCallback<ResponseBody> onSaveCardResponses = new RetrofitCallback<ResponseBody>(this)
+        {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                super.onResponse(call, response);
+                if (response.isSuccessful())
+                {
+                    responseOnCards.clear();
+                }
+            }
+        };
+
+        callSaveResponseOnCard = API.Profile.saveResponseOnCards(App.getInstance()
+                .getUser().getResult().getId(), responseOnCards, SharedPreferences
+                .getFlirtjarUserToken(ActivityNavDrawer.this), onSaveCardResponses);
+
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        trySavingResponseOnCards();
+    }
+
+    @Override
+    public void onDetach()
+    {
+        trySavingResponseOnCards();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        trySavingResponseOnCards();
+        super.onStop();
     }
 
     class FacebookProfileTracker extends ProfileTracker

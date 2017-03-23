@@ -8,13 +8,13 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="9dp">
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="3dp">
 
-        <ImageView
+        <views.RoundedImageView
             android:id="@+id/iv_pushPinImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
             android:scaleType="centerCrop"
             android:src="@drawable/sample_girl"/>
 
@@ -24,6 +24,6 @@
         android:id="@+id/iv_pushPin"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/ic_map_pointer_default"/>
+        android:src="@drawable/ic_map_pointer_detour"/>
 
 </RelativeLayout>

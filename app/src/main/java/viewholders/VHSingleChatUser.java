@@ -48,7 +48,7 @@ public class VHSingleChatUser extends RecyclerView.ViewHolder
             @Override
             public void onClick(View view)
             {
-                ActivityChat.start(context, matchedUser.getId(), matchedUser.getFirstName());
+                ActivityChat.start(context, matchedUser.getId(), matchedUser.getFirstName(), matchedUser.getProfilePicture());
             }
         });
 

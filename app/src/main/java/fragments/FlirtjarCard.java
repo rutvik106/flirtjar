@@ -30,24 +30,26 @@ import apimodels.Cards;
 public class FlirtjarCard
 {
 
+    final private Cards.ResultBean singleCardUser;
+    final private SwipeEventListener swipeEventListener;
     @View(R.id.iv_cardUserImage)
     private ImageView ivCardUserImage;
-
     @View(R.id.tv_cardUserNameAndAge)
     private TextView tvCardUserNameAndAge;
-
     @View(R.id.tv_cardUserFrom)
     private TextView tvCardUserFrom;
-
-    private Cards.ResultBean singleCardUser;
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
-    public FlirtjarCard(Context context, Cards.ResultBean singleCardUser, SwipePlaceHolderView swipeView)
+    public FlirtjarCard(Context context,
+                        Cards.ResultBean singleCardUser,
+                        SwipePlaceHolderView swipeView,
+                        SwipeEventListener swipeEventListener)
     {
         mContext = context;
         this.singleCardUser = singleCardUser;
         mSwipeView = swipeView;
+        this.swipeEventListener = swipeEventListener;
     }
 
     @Resolve
@@ -63,26 +65,21 @@ public class FlirtjarCard
     @Click(R.id.iv_cardUserImage)
     private void onClick()
     {
-        ActivityProfileView.start(mContext, false, singleCardUser.getId() + "");
+        ActivityProfileView.start(mContext, false, singleCardUser.getId());
     }
 
     @SwipeOut
     private void onSwipedOut()
     {
         Log.d("EVENT", "onSwipedOut");
-        mSwipeView.addView(this);
-    }
-
-    @SwipeCancelState
-    private void onSwipeCancelState()
-    {
-        Log.d("EVENT", "onSwipeCancelState");
+        swipeEventListener.onSwipeOut(this);
     }
 
     @SwipeIn
     private void onSwipeIn()
     {
         Log.d("EVENT", "onSwipedIn");
+        swipeEventListener.onSwipeIn(this);
     }
 
     @SwipeInState
@@ -95,5 +92,23 @@ public class FlirtjarCard
     private void onSwipeOutState()
     {
         Log.d("EVENT", "onSwipeOutState");
+    }
+
+    @SwipeCancelState
+    private void onSwipeCancelState()
+    {
+        Log.d("EVENT", "onSwipeCancelState");
+    }
+
+    public Cards.ResultBean getSingleCardUser()
+    {
+        return singleCardUser;
+    }
+
+    public interface SwipeEventListener
+    {
+        void onSwipeIn(FlirtjarCard card);
+
+        void onSwipeOut(FlirtjarCard card);
     }
 }

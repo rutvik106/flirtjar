@@ -15,6 +15,7 @@ import apimodels.NotificationList;
 import apimodels.OnAddPicturesResponse;
 import apimodels.OtherPictures;
 import apimodels.Picture;
+import apimodels.ResponseOnCard;
 import apimodels.SendChatMessage;
 import apimodels.SentMessage;
 import apimodels.UpdateUser;
@@ -64,7 +65,7 @@ public class API
             return call;
         }
 
-        public static Call<apimodels.User> getUser(final String userId,
+        public static Call<apimodels.User> getUser(final int userId,
                                                    final RetrofitCallback<apimodels.User> callback)
         {
             Call<apimodels.User> call = users.getUser(userId);
@@ -131,6 +132,17 @@ public class API
                                                               final RetrofitCallback<OnAddPicturesResponse> callback)
         {
             Call<OnAddPicturesResponse> call = profile.addPictures(pictures, Constants.CONTENT_TYPE_JSON,
+                    token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<ResponseBody> saveResponseOnCards(final int userId,
+                                                             final List<ResponseOnCard> responseOnCards,
+                                                             final String token,
+                                                             final RetrofitCallback<ResponseBody> callback)
+        {
+            Call<ResponseBody> call = profile.saveResponseOnCards(userId, responseOnCards, Constants.CONTENT_TYPE_JSON,
                     token);
             call.enqueue(callback);
             return call;

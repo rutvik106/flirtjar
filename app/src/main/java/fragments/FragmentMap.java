@@ -47,6 +47,7 @@ import retrofit2.Response;
 import utils.Constants;
 import utils.FusedLocation;
 import utils.SharedPreferences;
+import views.RoundedImageView;
 
 /**
  * Created by rutvik on 2/1/2017 at 6:26 PM.
@@ -208,7 +209,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             return null;
         }
         final View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker, null);
-        final ImageView ivPushPinImage = (ImageView) view.findViewById(R.id.iv_pushPinImage);
+        final RoundedImageView ivPushPinImage = (RoundedImageView) view.findViewById(R.id.iv_pushPinImage);
         ivPushPinImage.setImageBitmap(bmp);
 
         final ImageView pushPin = (ImageView) view.findViewById(R.id.iv_pushPin);

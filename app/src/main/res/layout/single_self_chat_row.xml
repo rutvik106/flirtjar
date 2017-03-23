@@ -25,6 +25,7 @@
             android:layout_marginBottom="5dp"
             android:textColor="#f1f1f1"
             android:textSize="12sp"
+            android:visibility="gone"
             tools:text="User 2"/>
 
         <TextView
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_chatUserName"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:maxWidth="250dp"

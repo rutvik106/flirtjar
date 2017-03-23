@@ -27,6 +27,7 @@ public class Constants
     public static final String USER_ID = "USER_ID";
     public static final String CHAT_CONTACT_NAME = "CHAT_CONTACT_NAME";
     public static final String INSTA_ACCESS_TOKEN = "INSTA_ACCESS_TOKEN";
+    public static final String USER_PROFILE_PICTURE = "USER_PROFILE_PICTURE";
 
     public enum Gender
     {
@@ -56,7 +57,7 @@ public class Constants
     {
         WALK("walk", "Walk"), COFFEE("coffee", "Coffee"), DRINK("drink", "Drink"),
         LONG_DRIVE("long_drive", "Long Drive"), LUNCH("lunch", "Lunch"), DINNER("dinner", "Dinner"),
-        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Please Select");
+        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Status Not Set");
 
         final String value;
         final String label;

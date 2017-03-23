@@ -17,6 +17,7 @@ import apimodels.OnAddPicturesResponse;
 import apimodels.OtherPictures;
 import apimodels.Picture;
 import apimodels.ReceivedGifts;
+import apimodels.ResponseOnCard;
 import apimodels.SendChatMessage;
 import apimodels.SendGift;
 import apimodels.SentMessage;
@@ -61,7 +62,7 @@ public interface ApiInterface
                                            @Header(Constants.AUTHORIZATION) String token);
 
         @GET("users/{id}/")
-        Call<User> getUser(@Path("id") String id);
+        Call<User> getUser(@Path("id") int id);
 
         @GET("users/me/")
         Call<User> getCurrentUser(@Header(Constants.AUTHORIZATION) String token);
@@ -106,6 +107,12 @@ public interface ApiInterface
         Call<GridUsers> getViewUsers(@Path("id") int userId,
                                      @Query("response") int viewType,
                                      @Header(Constants.AUTHORIZATION) String token);
+
+        @POST("profile/view/user/{id}/")
+        Call<ResponseBody> saveResponseOnCards(@Path("id") int userId,
+                                               @Body List<ResponseOnCard> responseOnCards,
+                                               @Header(Constants.CONTENT_TYPE) String contentType,
+                                               @Header(Constants.AUTHORIZATION) String token);
 
         enum ResponseType
         {
