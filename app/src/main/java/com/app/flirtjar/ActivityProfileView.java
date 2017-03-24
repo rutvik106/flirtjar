@@ -170,10 +170,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         setStatus(result);
 
         TextView lookingFor = new TextView(this);
-        /*Drawable lookingForImg = getResources().getDrawable(R.drawable.looking_for);
-        lookingForImg.setBounds( 0, 0, 60, 60 );*/
-        lookingFor.setCompoundDrawablesWithIntrinsicBounds(R.drawable.looking_for, 0, 0, 0);
-        lookingFor.setCompoundDrawablePadding(10);
+        lookingFor.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_looking_for, 0, 0, 0);
+        lookingFor.setCompoundDrawablePadding(15);
         for (Constants.Gender g : Constants.Gender.values())
         {
             if (result.getLookingFor().equals(g.getValue()))
@@ -185,11 +183,21 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
 
         TextView height = new TextView(this);
-        height.setText("Height " + result.getHeight() + "");
+        height.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_height, 0, 0, 0);
+        height.setCompoundDrawablePadding(15);
+        if (result.getHeight() == 0.0)
+        {
+            height.setText("Height Not Specified");
+        } else
+        {
+            height.setText("Height " + result.getHeight() + "");
+        }
         llUserOtherDetailsContainer.addView(height);
 
 
         TextView hairColor = new TextView(this);
+        hairColor.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_hair, 0, 0, 0);
+        hairColor.setCompoundDrawablePadding(15);
         for (Constants.HairColor h : Constants.HairColor.values())
         {
             if (result.getHairColor().equals(h.getValue()))
@@ -201,6 +209,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
 
         TextView eyeColor = new TextView(this);
+        eyeColor.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_eye_colour, 0, 0, 0);
+        eyeColor.setCompoundDrawablePadding(15);
         for (Constants.EyeColor e : Constants.EyeColor.values())
         {
             if (result.getEyeColor().equals(e.getValue()))
@@ -212,16 +222,22 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
 
         TextView occupation = new TextView(this);
+        occupation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_occupation, 0, 0, 0);
+        occupation.setCompoundDrawablePadding(15);
         occupation.setText(result.getOccupation());
         llUserOtherDetailsContainer.addView(occupation);
 
 
         TextView salary = new TextView(this);
+        salary.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_dollar, 0, 0, 0);
+        salary.setCompoundDrawablePadding(15);
         salary.setText(result.getSalary() + "");
         llUserOtherDetailsContainer.addView(salary);
 
 
         TextView aquarius = new TextView(this);
+        aquarius.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_zodiac, 0, 0, 0);
+        aquarius.setCompoundDrawablePadding(15);
         for (Constants.Aquarius a : Constants.Aquarius.values())
         {
             if (result.getAquarius().equals(a.getValue()))
@@ -232,6 +248,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         llUserOtherDetailsContainer.addView(aquarius);
 
         TextView smoking = new TextView(this);
+        smoking.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_smoking, 0, 0, 0);
+        smoking.setCompoundDrawablePadding(15);
         if (result.getSmoking())
         {
             smoking.setText("Smokes");
@@ -243,6 +261,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
 
         TextView drinks = new TextView(this);
+        drinks.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_bear, 0, 0, 0);
+        drinks.setCompoundDrawablePadding(15);
         if (result.getDrink())
         {
             drinks.setText("Drinks");
@@ -253,6 +273,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         llUserOtherDetailsContainer.addView(drinks);
 
         TextView weed = new TextView(this);
+        weed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_weed, 0, 0, 0);
+        weed.setCompoundDrawablePadding(15);
         if (result.getSmoking())
         {
             weed.setText("Takes Weed");

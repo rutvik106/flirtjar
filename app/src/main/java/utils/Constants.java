@@ -31,7 +31,7 @@ public class Constants
 
     public enum Gender
     {
-        MALE("M", "Male"), FEMALE("F", "Female"), UNSPECIFIED("U", "Unspecified"), NONE("", "Please Select");
+        MALE("M", "Male"), FEMALE("F", "Female"), UNSPECIFIED("U", "Unspecified"), NONE("", "Not Specified");
 
         final String value;
         final String label;
@@ -57,7 +57,7 @@ public class Constants
     {
         WALK("walk", "Walk"), COFFEE("coffee", "Coffee"), DRINK("drink", "Drink"),
         LONG_DRIVE("long_drive", "Long Drive"), LUNCH("lunch", "Lunch"), DINNER("dinner", "Dinner"),
-        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Status Not Set");
+        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Status Not Specified");
 
         final String value;
         final String label;
@@ -82,7 +82,7 @@ public class Constants
 
     public enum EyeColor
     {
-        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Please Select");
+        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Not Specified");
         final String value;
         final String label;
 
@@ -105,7 +105,7 @@ public class Constants
 
     public enum HairColor
     {
-        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Please Select");
+        BLACK("bl", "Black"), BROWN("br", "Brown"), BLUE("bu", "Blue"), NONE("", "Not Specified");
         final String value;
         final String label;
 
@@ -131,7 +131,7 @@ public class Constants
         Aries("ar", "Aries"), Taurus("ta", "Taurus"), Gemini("ge", "Gemini"),
         Cancer("ca", "Cancer"), Leo("le", "Leo"), Virgo("vi", "Virgo"), Libra("li", "Libra"),
         Scorpio("sc", "Scorpio"), Sagittarius("sa", "Sagittarius"), Capricorn("cp", "Capricorn"),
-        Aquarius("aq", "Aquarius"), Pisces("pi", "Pisces"), NONE("", "Please Select");
+        Aquarius("aq", "Aquarius"), Pisces("pi", "Pisces"), NONE("", "Not Specified");
 
         final String value;
         final String label;

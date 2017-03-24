@@ -12,6 +12,7 @@
 
     <TextView
         android:id="@+id/ib_settings"
+        fontPath="fonts/Righteous-Regular.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -24,7 +25,7 @@
         android:scaleType="centerInside"
         android:text="Notifications"
         android:textColor="#333333"
-        android:textSize="18sp"/>
+        android:textSize="20sp"/>
 
 
     <android.support.v7.widget.RecyclerView

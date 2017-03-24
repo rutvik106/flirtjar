@@ -29,7 +29,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:orientation="horizontal"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
 
         <ImageView
@@ -43,7 +43,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right|bottom"
-            android:background="@mipmap/ic_edit"/>
+            android:background="@drawable/ic_edit"/>
 
     </FrameLayout>
 
@@ -54,7 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="NANDITA"
-        android:textSize="20sp"/>
+        android:textColor="#333333"
+        android:textSize="32sp"/>
 
 
     <LinearLayout
@@ -78,18 +79,20 @@
             android:src="@mipmap/ic_like_gradient"/>
 
         <TextView
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/liked"
+            android:textColor="#333333"
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_likeCount"
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:textColor="#333333"
             android:textSize="18sp"
             tools:text="27 >"/>
 
@@ -122,19 +125,21 @@
             android:src="@mipmap/ic_visitor"/>
 
         <TextView
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Visited"
+            android:textColor="#333333"
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_visitedCount"
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
+
             android:gravity="right"
+            android:textColor="#333333"
             android:textSize="18sp"
             tools:text="113 >"/>
 
@@ -168,20 +173,22 @@
             android:src="@mipmap/ic_superlike_gradient"/>
 
         <TextView
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Superliked"
+            android:textColor="#333333"
 
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_superlikeCount"
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="right"
+
+            android:textColor="#333333"
             android:textSize="18sp"
             tools:text="113 >"/>
 
@@ -213,20 +220,20 @@
             android:src="@mipmap/ic_visitor"/>
 
         <TextView
-            fontPath="fonts/Righteous-Regular.ttf"
-
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/skipped"
+            android:textColor="#333333"
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_skipCount"
-            fontPath="fonts/Righteous-Regular.ttf"
-
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
+            android:textColor="#333333"
             android:textSize="18sp"
             tools:text="1 >"/>
 
@@ -257,7 +264,7 @@
             android:src="@drawable/insta_logo"/>
 
         <TextView
-            fontPath="fonts/Righteous-Regular.ttf"
+            fontPath="fonts/Montserrat-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
