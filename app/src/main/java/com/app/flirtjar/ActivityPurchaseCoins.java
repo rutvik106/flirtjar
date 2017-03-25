@@ -113,9 +113,18 @@ public class ActivityPurchaseCoins extends Activity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        Log.i(TAG, "onActivityResult: REQUEST CODE: " + requestCode);
+        Log.i(TAG, "onActivityResult: RESULT CODE: " + resultCode);
         if (!mIabHelper.handleActivityResult(requestCode, resultCode, data))
         {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == 10001)
+        {
+            if (resultCode == 0)
+            {
+                finish();
+            }
         }
     }
 

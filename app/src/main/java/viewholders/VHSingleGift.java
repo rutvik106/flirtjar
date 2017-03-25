@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.flirtjar.R;
 import com.bumptech.glide.Glide;
@@ -17,6 +16,7 @@ import apimodels.Gift;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dialogs.PurchaseDialog;
 
 /**
  * Created by rutvik on 3/10/2017 at 9:20 AM.
@@ -60,6 +60,6 @@ public class VHSingleGift extends RecyclerView.ViewHolder
     @OnClick(R.id.ll_gift)
     public void onClick()
     {
-        Toast.makeText(context, "gift id: " + singleGift.getId(), Toast.LENGTH_SHORT).show();
+        new PurchaseDialog(context).show();
     }
 }
