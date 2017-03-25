@@ -1,464 +1,470 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/activity_login"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingBottom="10dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="9dp"
-              android:paddingTop="10dp">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    tools:ignore="MissingPrefix">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_lbl_settings"
+            fontPath="fonts/Montserrat-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="Discovery Settings"
+            android:textColor="#333333"
+            android:textSize="20sp"/>
 
         <LinearLayout
-            android:id="@+id/layout_main"
+
+            android:id="@+id/layout_show_me"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/setting_card"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_lbl_showme"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Show me"
+                android:textColor="#79BADD"
+                android:textSize="18sp"/>
 
             <LinearLayout
-                android:id="@+id/layout_lbl"
+                android:id="@+id/layout_man"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_lbl_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="Discovery Settings"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_show_me"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/setting_card"
-                android:orientation="vertical"
-                android:paddingBottom="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/tv_lbl_showme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Show me"
-                    android:textColor="#79BADD"
-                    android:textSize="18sp"/>
-
-                <LinearLayout
-                    android:id="@+id/layout_man"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_man"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:gravity="center_vertical"
-                        android:text="Man"
-                        android:textColor="@color/splash_font"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-
-                    <Switch
-                        android:id="@+id/sw_man"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:theme="@style/SwitchTheme"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_woman"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_woman"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:gravity="center_vertical"
-                        android:text="Woman"
-                        android:textColor="@color/splash_font"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-
-                    <Switch
-                        android:id="@+id/sw_woman"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:theme="@style/SwitchTheme"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/setting_card"
-                android:orientation="vertical"
-                android:paddingBottom="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_lbl_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_lbl_show_age"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:text="Show age group"
-                        android:textColor="#79BADD"
-                        android:textSize="18sp"/>
-
-                    <TextView
-                        android:id="@+id/tv_lbl_age_num"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:text="18-50+"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:id="@+id/layout_seek"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.edmodo.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
-                                                  android:id="@+id/rangebar1"
-                                                  android:layout_width="match_parent"
-                                                  android:layout_height="wrap_content"
-                                                  custom:tickCount="20"/>
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-
-                android:id="@+id/layout_showme_jar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/setting_card"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tv_lbl_show_me_on_jar"
+                    android:id="@+id/tv_man"
+                    fontPath="fonts/Montserrat-Bold.ttf"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Show me on jar"
-                    android:textColor="#79BADD"
-                    android:textSize="18sp"/>
+                    android:gravity="center_vertical"
+                    android:text="Man"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
                 <Switch
-                    android:id="@+id/sw_show_me_on_jar"
+                    android:id="@+id/sw_man"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:theme="@style/SwitchTheme"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_woman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_woman"
+                    fontPath="fonts/Montserrat-Bold.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:gravity="center_vertical"
+                    android:text="Woman"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <Switch
+                    android:id="@+id/sw_woman"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:theme="@style/SwitchTheme"/>
-
             </LinearLayout>
 
-            <LinearLayout
 
-                android:id="@+id/layout_showme_nearby"
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/layout_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/setting_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/layout_lbl_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/setting_card"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_lbl_show_me_near_by"
+                    android:id="@+id/tv_lbl_show_age"
+                    fontPath="fonts/Montserrat-Bold.ttf"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:text="Show me on jar"
+                    android:text="Show ages"
                     android:textColor="#79BADD"
                     android:textSize="18sp"/>
 
-                <Switch
-                    android:id="@+id/sw_show_me_near_by"
+                <TextView
+                    android:id="@+id/tv_lbl_age_num"
+                    fontPath="fonts/Montserrat-Bold.ttf"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
+                    android:gravity="right"
                     android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="10dp"
+                    android:text="18 - 50+"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:theme="@style/SwitchTheme"/>
-
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_app_settings"
+                android:id="@+id/layout_seek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_lbl_app_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="App Settings"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_show_diatance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/setting_card"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_distance_tag"
+                <com.edmodo.rangebar.RangeBar
+                    xmlns:custom="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/rangebar1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    custom:barColor="#FFFFFF"
+                    custom:tickCount="20"/>
 
-                    <TextView
-                        android:id="@+id/tv_lbl_show_distance"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:text="Show me distance in"
-                        android:textColor="#79BADD"
-                        android:textSize="18sp"/>
-
-                    <TextView
-                        android:id="@+id/lbl_distnace_tag"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:text="km"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_distance_btn_tag"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_km"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_button"
-                        android:text="km"
-                        android:textAllCaps="false"
-                        android:textColor="@color/background"
-                        android:textSize="14sp"/>
-
-
-                    <Button
-                        android:id="@+id/btn_meter"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_button"
-                        android:padding="5dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:text="m"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_contactus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_lbl_contact_us"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="Contact Us"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_help_support"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/setting_card"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/tv_help_support"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Help &amp; Support"
-                    android:textColor="#79BADD"
-                    android:textSize="18sp"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/setting_card"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/tv_share"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Share Flirtjar"
-                    android:textColor="#79BADD"
-                    android:textSize="18sp"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-
-                android:id="@+id/layout_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/img_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1.5"
-                    android:background="@drawable/ic_jar_active"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Share Flirtjar"
-                    android:textColor="#79BADD"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/tv_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1.5"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:text="Version 1.0.0 (android)"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"/>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+
+        <LinearLayout
+
+            android:id="@+id/layout_showme_jar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/setting_card"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_lbl_show_me_on_jar"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Show me on jar"
+                android:textColor="#333333"
+                android:textSize="18sp"/>
+
+            <Switch
+                android:id="@+id/sw_show_me_on_jar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:theme="@style/SwitchTheme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_showme_nearby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/setting_card"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_lbl_show_me_near_by"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Show me on Nearby"
+                android:textColor="#333333"
+                android:textSize="18sp"/>
+
+            <Switch
+                android:id="@+id/sw_show_me_near_by"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:theme="@style/SwitchTheme"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_app_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_lbl_app_settings"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="App Settings"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/layout_show_diatance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/setting_card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/layout_distance_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_lbl_show_distance"
+                    fontPath="fonts/Montserrat-Bold.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Show me distance in"
+                    android:textColor="#79BADD"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/lbl_distnace_tag"
+                    fontPath="fonts/Montserrat-Bold.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="km"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_distance_btn_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_km"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:text="km"
+                    android:textAllCaps="false"
+                    android:textColor="@color/background"
+                    android:textSize="14sp"/>
+
+
+                <Button
+                    android:id="@+id/btn_meter"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:padding="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="m"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_contactus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_lbl_contact_us"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="Contact Us"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/layout_help_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/setting_card"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_help_support"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Help &amp; Support"
+                android:textColor="#333333"
+                android:textSize="18sp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/setting_card"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tv_share"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Share Flirtjar"
+                android:textColor="#333333"
+                android:textSize="18sp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:id="@+id/layout_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.5"
+                android:background="@drawable/ic_jar_active"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Share Flirtjar"
+                android:textColor="#79BADD"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_version"
+                fontPath="fonts/Montserrat-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1.5"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Version 1.0.0 (android)"
+                android:textColor="@color/black"
+                android:textSize="11sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

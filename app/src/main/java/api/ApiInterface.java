@@ -9,6 +9,7 @@ import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.Gift;
 import apimodels.GridUsers;
+import apimodels.ListOfRecommendedProfiles;
 import apimodels.MatchedProfiles;
 import apimodels.NearByUser;
 import apimodels.NotificationDeviceDetails;
@@ -21,6 +22,7 @@ import apimodels.ResponseOnCard;
 import apimodels.SendChatMessage;
 import apimodels.SendGift;
 import apimodels.SentMessage;
+import apimodels.UpdateCoins;
 import apimodels.UpdateUser;
 import apimodels.User;
 import apimodels.Views;
@@ -78,6 +80,11 @@ public interface ApiInterface
         @GET("profile/currency/")
         Call<Coins> getCurrency(@Header(Constants.AUTHORIZATION) String token);
 
+        @PUT("profile/currency/")
+        Call<Coins> updateCoins(@Body UpdateCoins coins,
+                                @Header(Constants.CONTENT_TYPE) String contentType,
+                                @Header(Constants.AUTHORIZATION) String token);
+
         @GET("profile/gifts/")
         Call<ReceivedGifts> getReceivedGifts(@Header(Constants.AUTHORIZATION) String token);
 
@@ -107,6 +114,10 @@ public interface ApiInterface
         Call<GridUsers> getViewUsers(@Path("id") int userId,
                                      @Query("response") int viewType,
                                      @Header(Constants.AUTHORIZATION) String token);
+
+        @GET("profile/recommendation/")
+        Call<ListOfRecommendedProfiles> getRecommendedProfiles(@Query("page") int pageNo,
+                                                               @Header(Constants.AUTHORIZATION) String token);
 
         @POST("profile/view/user/{id}/")
         Call<ResponseBody> saveResponseOnCards(@Path("id") int userId,
