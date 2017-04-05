@@ -16,6 +16,14 @@
 #   public *;
 #}
 
+-keepattributes *Annotation*
+
+-dontobfuscate
+
+-optimizations !code/allocation/variable
+
+
+
 # FOR GLIDE
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
@@ -69,4 +77,32 @@
 #FOR FACEBOOK SDK
 -keep class com.facebook.** {
    *;
+}
+
+-keep class com.synnapps.carouselview.**{
+    *;
+}
+
+-keep class com.mindorks.placeholderview.**{
+    *;
+}
+
+-keep class com.mindorks.placeholderview.annotations.**{
+    *;
+}
+
+-keepclassmembers class com.mindorks.placeholderview.annotations.**{
+    *;
+}
+
+-keep @com.mindorks.placeholderview.annotations.Keep interface * {
+    *;
+}
+
+-keep interface com.mindorks.placeholderview.annotations.**{
+  *;
+}
+
+-keepclasseswithmembers class * {
+    @com.mindorks.placeholderview.annotations.* <methods>;
 }

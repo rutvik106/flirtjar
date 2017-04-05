@@ -908,19 +908,28 @@ public class ActivityNavDrawer extends BaseActivity
     @Override
     public void onDestroyView()
     {
-        trySavingResponseOnCards();
+        if (!responseOnCards.isEmpty())
+        {
+            trySavingResponseOnCards();
+        }
     }
 
     @Override
     public void onDetach()
     {
-        trySavingResponseOnCards();
+        if (!responseOnCards.isEmpty())
+        {
+            trySavingResponseOnCards();
+        }
     }
 
     @Override
     protected void onStop()
     {
-        trySavingResponseOnCards();
+        if (!responseOnCards.isEmpty())
+        {
+            trySavingResponseOnCards();
+        }
         super.onStop();
     }
 
