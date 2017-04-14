@@ -1,6 +1,7 @@
 package com.app.flirtjar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,7 @@ import util.IabHelper;
 import util.IabResult;
 import util.Inventory;
 import util.Purchase;
-import utils.BillingDetailsConstants;
+import utils.InAppPurchaseConstants;
 
 public class ActivityPurchaseCoins extends Activity
 {
@@ -43,7 +44,7 @@ public class ActivityPurchaseCoins extends Activity
 
                     } else
                     {
-                        mIabHelper.consumeAsync(inv.getPurchase(BillingDetailsConstants.ITEM_SKU),
+                        mIabHelper.consumeAsync(inv.getPurchase(InAppPurchaseConstants.ItemSku.COINS_30),
                                 onConsumeFinishedListener);
                     }
                 }
@@ -57,7 +58,7 @@ public class ActivityPurchaseCoins extends Activity
                     if (result.isFailure())
                     {
                         return;
-                    } else if (purchase.getSku().equals(BillingDetailsConstants.ITEM_SKU))
+                    } else if (purchase.getSku().equals(InAppPurchaseConstants.ItemSku.COINS_30))
                     {
                         consumeItem();
 
@@ -65,13 +66,19 @@ public class ActivityPurchaseCoins extends Activity
                 }
             };
 
+    public static void start(final Context context, String packageType)
+    {
+        final Intent i = new Intent(context, ActivityPurchaseCoins.class);
+        i.putExtra(IntentExtra.PACKAGE_TYPE, packageType);
+        context.startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        mIabHelper = new IabHelper(this, BillingDetailsConstants.base64EncodedPublicKey);
+        mIabHelper = new IabHelper(this, InAppPurchaseConstants.base64EncodedPublicKey);
 
         mIabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener()
         {
@@ -81,8 +88,27 @@ public class ActivityPurchaseCoins extends Activity
                 if (result.isSuccess())
                 {
                     Log.i(TAG, "IN APP BILLING SETUP OK");
-                    mIabHelper.launchPurchaseFlow(ActivityPurchaseCoins.this, BillingDetailsConstants.ITEM_SKU
-                            , 10001, onIabPurchaseFinishedListener, "mypurchasetoken");
+
+                    if (getIntent().getStringExtra(IntentExtra.PACKAGE_TYPE)
+                            .equals(IntentExtra.THIRTY_COINS))
+                    {
+                        mIabHelper.launchPurchaseFlow(ActivityPurchaseCoins.this,
+                                InAppPurchaseConstants.ItemSku.COINS_30,
+                                10001, onIabPurchaseFinishedListener, "mypurchasetoken");
+                    } else if (getIntent().getStringExtra(IntentExtra.PACKAGE_TYPE)
+                            .equals(IntentExtra.HUNDRED_COINS))
+                    {
+                        mIabHelper.launchPurchaseFlow(ActivityPurchaseCoins.this,
+                                InAppPurchaseConstants.ItemSku.COINS_100,
+                                10001, onIabPurchaseFinishedListener, "mypurchasetoken");
+                    } else if (getIntent().getStringExtra(IntentExtra.PACKAGE_TYPE)
+                            .equals(IntentExtra.TWOFIFTY_COINS))
+                    {
+                        mIabHelper.launchPurchaseFlow(ActivityPurchaseCoins.this,
+                                InAppPurchaseConstants.ItemSku.COINS_250,
+                                10001, onIabPurchaseFinishedListener, "mypurchasetoken");
+                    }
+
                 } else
                 {
                     Log.i(TAG, "IN APP BILLING SETUP FAILED");
@@ -92,7 +118,6 @@ public class ActivityPurchaseCoins extends Activity
 
 
     }
-
 
     private void consumeItem()
     {
@@ -126,6 +151,14 @@ public class ActivityPurchaseCoins extends Activity
                 finish();
             }
         }
+    }
+
+    public static class IntentExtra
+    {
+        public static final String PACKAGE_TYPE = "PACKAGE_TYPE";
+        public static final String HUNDRED_COINS = "HUNDRED_COINS";
+        public static final String THIRTY_COINS = "THIRTY_COINS";
+        public static final String TWOFIFTY_COINS = "TWOFIFTY_COINS";
     }
 
 }

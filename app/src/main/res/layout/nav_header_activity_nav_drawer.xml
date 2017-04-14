@@ -53,9 +53,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="NANDITA"
         android:textColor="#333333"
-        android:textSize="32sp"/>
+        android:textSize="32sp"
+        tools:text="NANDITA"/>
+
+    <TextView
+        android:id="@+id/tv_userFlirtCoins"
+        fontPath="fonts/Montserrat-Bold.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/ic_filrt_money_small"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        tools:text="100"/>
 
 
     <LinearLayout

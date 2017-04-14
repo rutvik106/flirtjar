@@ -4,6 +4,7 @@ import java.util.List;
 
 import apimodels.Cards;
 import apimodels.ChatMessages;
+import apimodels.Coins;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.Gift;
@@ -117,11 +118,11 @@ public class API
             return call;
         }
 
-        public static Call<OtherPictures> getOtherPictures(final int pageNo,
+        public static Call<OtherPictures> getOtherPictures(final int id,
                                                            final String token,
                                                            final RetrofitCallback<OtherPictures> callback)
         {
-            Call<OtherPictures> call = profile.getOtherPictures(pageNo,
+            Call<OtherPictures> call = profile.getOtherPictures(id,
                     token);
             call.enqueue(callback);
             return call;
@@ -144,6 +145,14 @@ public class API
         {
             Call<ResponseBody> call = profile.saveResponseOnCards(userId, responseOnCards, Constants.CONTENT_TYPE_JSON,
                     token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<Coins> getCoins(final String token,
+                                           final RetrofitCallback<Coins> callback)
+        {
+            Call<Coins> call = profile.getCurrency(token);
             call.enqueue(callback);
             return call;
         }

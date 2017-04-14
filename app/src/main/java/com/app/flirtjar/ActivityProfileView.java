@@ -67,6 +67,8 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
     @BindView(R.id.ibtn_like)
     ImageButton ibtnLike;
 
+    int userId;
+
     public static void start(Context context, boolean isViewingSelf, int userId)
     {
         Intent i = new Intent(context, ActivityProfileView.class);
@@ -95,11 +97,13 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
         if (isViewingSelfProfile)
         {
             llJarOptionsContainer.setVisibility(View.GONE);
+            userId = App.getInstance().getUser().getResult().getId();
             getProfileDetails(token);
         } else
         {
             llJarOptionsContainer.setVisibility(View.VISIBLE);
-            getOtherUserProfileDetails(getIntent().getIntExtra(Constants.USER_ID, 0));
+            userId = getIntent().getIntExtra(Constants.USER_ID, 0);
+            getOtherUserProfileDetails(userId);
         }
     }
 
@@ -352,7 +356,7 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
 
     private void getOtherImages()
     {
-        API.Profile.getOtherPictures(1, SharedPreferences.getFlirtjarUserToken(this),
+        API.Profile.getOtherPictures(userId, SharedPreferences.getFlirtjarUserToken(this),
                 new RetrofitCallback<OtherPictures>(this)
                 {
                     @Override

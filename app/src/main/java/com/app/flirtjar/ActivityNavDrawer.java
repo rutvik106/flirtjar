@@ -51,6 +51,7 @@ import java.util.List;
 import adapters.NotificationListAdapter;
 import api.API;
 import api.RetrofitCallback;
+import apimodels.Coins;
 import apimodels.CreateUser;
 import apimodels.CreatedUser;
 import apimodels.NotificationList;
@@ -111,6 +112,7 @@ public class ActivityNavDrawer extends BaseActivity
     TextView tvVisitedCount;
     TextView tvSuperlikeCount;
     TextView tvSkipCount;
+    TextView tvUserCoins;
     FusedLocation fusedLocation;
     NotificationListAdapter notificationListAdapter;
     FragmentJar fragmentJar = null;
@@ -230,6 +232,7 @@ public class ActivityNavDrawer extends BaseActivity
 
         tvSkipCount = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_skipCount);
         tvUsername = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_username);
+        tvUserCoins = (TextView) navigationViewHeaderLeft.findViewById(R.id.tv_userFlirtCoins);
 
         navigationViewHeaderLeft.findViewById(R.id.image_btn_edit)
                 .setOnClickListener(new View.OnClickListener()
@@ -473,6 +476,7 @@ public class ActivityNavDrawer extends BaseActivity
                     getViews(App.getInstance().getUser().getResult().getId(),
                             flirtjarUserToken);
 
+                    getUserFlirtCoins();
 
                 }
             }
@@ -485,6 +489,22 @@ public class ActivityNavDrawer extends BaseActivity
         };
 
         API.User.getCurrentUser(flirtjarUserToken, onGetUser);
+    }
+
+    private void getUserFlirtCoins()
+    {
+        API.Profile.getCoins(SharedPreferences.getFlirtjarUserToken(this), new RetrofitCallback<Coins>(this)
+        {
+            @Override
+            public void onResponse(Call<Coins> call, Response<Coins> response)
+            {
+                super.onResponse(call, response);
+                if (response.isSuccessful())
+                {
+                    tvUserCoins.setText(response.body().getResult().getCoins() + "");
+                }
+            }
+        });
     }
 
     private void getViews(int userId, String flirtjarUserToken)

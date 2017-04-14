@@ -97,8 +97,8 @@ public interface ApiInterface
         Call<MatchedProfiles> getMatchedProfiles(@Query("page") int page,
                                                  @Header(Constants.AUTHORIZATION) String token);
 
-        @GET("profile/pictures/")
-        Call<OtherPictures> getOtherPictures(@Query("page") int page,
+        @GET("profile/pictures/user/{id}/")
+        Call<OtherPictures> getOtherPictures(@Path("id") int id,
                                              @Header(Constants.AUTHORIZATION) String token);
 
         @POST("profile/pictures/")
