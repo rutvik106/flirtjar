@@ -18,6 +18,7 @@ import apimodels.OtherPictures;
 import apimodels.Picture;
 import apimodels.ResponseOnCard;
 import apimodels.SendChatMessage;
+import apimodels.SendGift;
 import apimodels.SentMessage;
 import apimodels.UpdateUser;
 import apimodels.Views;
@@ -153,6 +154,14 @@ public class API
                                            final RetrofitCallback<Coins> callback)
         {
             Call<Coins> call = profile.getCurrency(token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<SendGift> sendGift(SendGift.ResultBean gift,
+                                              String token, RetrofitCallback<SendGift> callback)
+        {
+            Call<SendGift> call = profile.sendGift(gift, Constants.CONTENT_TYPE_JSON, token);
             call.enqueue(callback);
             return call;
         }

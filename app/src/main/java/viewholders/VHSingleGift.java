@@ -16,7 +16,6 @@ import apimodels.Gift;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dialogs.PurchaseDialog;
 
 /**
  * Created by rutvik on 3/10/2017 at 9:20 AM.
@@ -26,7 +25,6 @@ public class VHSingleGift extends RecyclerView.ViewHolder
 {
     final Context context;
 
-    Gift.ResultBean singleGift;
     @BindView(R.id.iv_giftImage)
     ImageView ivGiftImage;
     @BindView(R.id.tv_giftPrice)
@@ -34,17 +32,23 @@ public class VHSingleGift extends RecyclerView.ViewHolder
     @BindView(R.id.ll_gift)
     LinearLayout llGift;
 
-    public VHSingleGift(Context context, View itemView)
+    OnGiftItemClickListener listener;
+
+    Gift.ResultBean singleGift;
+
+    public VHSingleGift(Context context, View itemView, OnGiftItemClickListener listener)
     {
         super(itemView);
         this.context = context;
+        this.listener = listener;
         ButterKnife.bind(this, itemView);
     }
 
-    public static VHSingleGift create(final Context context, final ViewGroup parent)
+    public static VHSingleGift create(final Context context, final ViewGroup parent,
+                                      OnGiftItemClickListener listener)
     {
         return new VHSingleGift(context, LayoutInflater.from(context)
-                .inflate(R.layout.single_gift_row_item, parent, false));
+                .inflate(R.layout.single_gift_row_item, parent, false), listener);
     }
 
     public static void bind(final VHSingleGift vh, Gift.ResultBean singleGift)
@@ -60,6 +64,12 @@ public class VHSingleGift extends RecyclerView.ViewHolder
     @OnClick(R.id.ll_gift)
     public void onClick()
     {
-        new PurchaseDialog(context).show();
+        listener.onGiftItemClicked(singleGift);
     }
+
+    public interface OnGiftItemClickListener
+    {
+        void onGiftItemClicked(Gift.ResultBean gift);
+    }
+
 }

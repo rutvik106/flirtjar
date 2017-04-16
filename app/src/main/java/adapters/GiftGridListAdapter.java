@@ -21,10 +21,13 @@ public class GiftGridListAdapter extends RecyclerView.Adapter
 
     final List<Gift.ResultBean> itemList;
 
-    public GiftGridListAdapter(final Context context)
+    final VHSingleGift.OnGiftItemClickListener listener;
+
+    public GiftGridListAdapter(final Context context, VHSingleGift.OnGiftItemClickListener listener)
     {
         this.contest = context;
         itemList = new ArrayList<>();
+        this.listener = listener;
     }
 
     public void addItem(Gift.ResultBean item)
@@ -36,7 +39,7 @@ public class GiftGridListAdapter extends RecyclerView.Adapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return VHSingleGift.create(contest, parent);
+        return VHSingleGift.create(contest, parent, listener);
     }
 
     @Override

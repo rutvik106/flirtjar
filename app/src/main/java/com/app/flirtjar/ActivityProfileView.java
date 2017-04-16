@@ -346,7 +346,7 @@ public class ActivityProfileView extends BaseActivity implements ImageListener
             case R.id.ibtn_dislike:
                 break;
             case R.id.ibtn_gift:
-                DialogSendGifts gifts = new DialogSendGifts(this);
+                DialogSendGifts gifts = new DialogSendGifts(this, userId);
                 gifts.show();
                 break;
             case R.id.ibtn_like:

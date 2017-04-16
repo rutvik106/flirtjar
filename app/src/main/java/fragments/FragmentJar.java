@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ import utils.SharedPreferences;
  * Created by rutvik on 2/5/2017 at 4:13 PM.
  */
 
-public class FragmentJar extends Fragment
+public class FragmentJar extends Fragment implements FlirtjarCard.CardResolveListener
 {
 
     public static final String TAG = App.APP_TAG + FragmentJar.class.getSimpleName();
@@ -55,17 +56,18 @@ public class FragmentJar extends Fragment
     @BindView(R.id.iv_loadingGif)
     ImageView ivLoadingGif;
     Call<Cards> call;
-    FlirtjarCard.SwipeEventListener swipeEventListener;
+    FlirtjarCard.FlirtCardEventListener flirtCardEventListener;
     FragmentJarCallbacks fragmentJarCallbacks;
     private SwipePlaceHolderView mSwipeView;
     private Context mContext;
     private Cards cards;
+    private Cards.ResultBean currentCard;
 
-    public static FragmentJar newInstance(FlirtjarCard.SwipeEventListener swipeEventListener,
+    public static FragmentJar newInstance(FlirtjarCard.FlirtCardEventListener flirtCardEventListener,
                                           FragmentJarCallbacks fragmentJarCallbacks)
     {
         FragmentJar fragmentJar = new FragmentJar();
-        fragmentJar.swipeEventListener = swipeEventListener;
+        fragmentJar.flirtCardEventListener = flirtCardEventListener;
         fragmentJar.fragmentJarCallbacks = fragmentJarCallbacks;
         return fragmentJar;
     }
@@ -152,7 +154,7 @@ public class FragmentJar extends Fragment
                             for (Cards.ResultBean singleCard : cards.getResult())
                             {
                                 mSwipeView.addView(new FlirtjarCard(getActivity(),
-                                        singleCard, mSwipeView, swipeEventListener));
+                                        singleCard, mSwipeView, flirtCardEventListener, FragmentJar.this));
                             }
 
                         }
@@ -215,7 +217,7 @@ public class FragmentJar extends Fragment
     @OnClick(R.id.ibtn_gift)
     public void sendGift()
     {
-        final DialogSendGifts sendGifts = new DialogSendGifts(getActivity());
+        final DialogSendGifts sendGifts = new DialogSendGifts(getActivity(), currentCard.getId());
         sendGifts.show();
     }
 
@@ -241,6 +243,13 @@ public class FragmentJar extends Fragment
     {
         fragmentJarCallbacks.onDetach();
         super.onDetach();
+    }
+
+    @Override
+    public void onResolve(Cards.ResultBean card)
+    {
+        Log.i(TAG, "On RESOLVE CALLED");
+        currentCard = card;
     }
 
     public interface FragmentJarCallbacks

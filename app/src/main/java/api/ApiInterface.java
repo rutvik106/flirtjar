@@ -88,7 +88,7 @@ public interface ApiInterface
         @GET("profile/gifts/")
         Call<ReceivedGifts> getReceivedGifts(@Header(Constants.AUTHORIZATION) String token);
 
-        @POST("profile/gifts/")
+        @POST("profile/gifts/send/")
         Call<SendGift> sendGift(@Body SendGift.ResultBean gift,
                                 @Header(Constants.CONTENT_TYPE) String contentType,
                                 @Header(Constants.AUTHORIZATION) String token);

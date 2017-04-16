@@ -31,7 +31,7 @@ public class FlirtjarCard
 {
 
     final private Cards.ResultBean singleCardUser;
-    final private SwipeEventListener swipeEventListener;
+    final private FlirtCardEventListener flirtCardEventListener;
     @View(R.id.iv_cardUserImage)
     private ImageView ivCardUserImage;
     @View(R.id.tv_cardUserNameAndAge)
@@ -41,15 +41,19 @@ public class FlirtjarCard
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
+    private CardResolveListener cardResolveListener;
+
     public FlirtjarCard(Context context,
                         Cards.ResultBean singleCardUser,
                         SwipePlaceHolderView swipeView,
-                        SwipeEventListener swipeEventListener)
+                        FlirtCardEventListener flirtCardEventListener,
+                        CardResolveListener cardResolveListener)
     {
         mContext = context;
         this.singleCardUser = singleCardUser;
         mSwipeView = swipeView;
-        this.swipeEventListener = swipeEventListener;
+        this.flirtCardEventListener = flirtCardEventListener;
+        this.cardResolveListener = cardResolveListener;
     }
 
     @Resolve
@@ -59,6 +63,7 @@ public class FlirtjarCard
         Glide.with(mContext).load(singleCardUser.getProfilePicture()).into(ivCardUserImage);
         tvCardUserNameAndAge.setText(singleCardUser.getFirstName() + ", " + singleCardUser.getAge());
         tvCardUserFrom.setText(singleCardUser.getCountry());
+        cardResolveListener.onResolve(singleCardUser);
     }
 
 
@@ -72,14 +77,14 @@ public class FlirtjarCard
     private void onSwipedOut()
     {
         Log.d("EVENT", "onSwipedOut");
-        swipeEventListener.onSwipeOut(this);
+        flirtCardEventListener.onSwipeOut(this);
     }
 
     @SwipeIn
     private void onSwipeIn()
     {
         Log.d("EVENT", "onSwipedIn");
-        swipeEventListener.onSwipeIn(this);
+        flirtCardEventListener.onSwipeIn(this);
     }
 
     @SwipeInState
@@ -105,10 +110,16 @@ public class FlirtjarCard
         return singleCardUser;
     }
 
-    public interface SwipeEventListener
+    public interface FlirtCardEventListener
     {
         void onSwipeIn(FlirtjarCard card);
 
         void onSwipeOut(FlirtjarCard card);
     }
+
+    public interface CardResolveListener
+    {
+        void onResolve(Cards.ResultBean card);
+    }
+
 }

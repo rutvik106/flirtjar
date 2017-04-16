@@ -33,6 +33,7 @@ public class ActivityPurchaseCoins extends Activity
                     }
                 }
             };
+    String itemSku;
     IabHelper.QueryInventoryFinishedListener queryInventoryFinishedListener =
             new IabHelper.QueryInventoryFinishedListener()
             {
@@ -44,7 +45,7 @@ public class ActivityPurchaseCoins extends Activity
 
                     } else
                     {
-                        mIabHelper.consumeAsync(inv.getPurchase(InAppPurchaseConstants.ItemSku.COINS_30),
+                        mIabHelper.consumeAsync(inv.getPurchase(itemSku),
                                 onConsumeFinishedListener);
                     }
                 }
@@ -58,10 +59,9 @@ public class ActivityPurchaseCoins extends Activity
                     if (result.isFailure())
                     {
                         return;
-                    } else if (purchase.getSku().equals(InAppPurchaseConstants.ItemSku.COINS_30))
+                    } else if (purchase.getSku().equals(itemSku))
                     {
                         consumeItem();
-
                     }
                 }
             };

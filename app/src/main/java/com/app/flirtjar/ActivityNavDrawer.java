@@ -80,7 +80,7 @@ import utils.SharedPreferences;
 public class ActivityNavDrawer extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
-        FlirtjarCard.SwipeEventListener, FragmentJar.FragmentJarCallbacks
+        FlirtjarCard.FlirtCardEventListener, FragmentJar.FragmentJarCallbacks
 {
 
     private static final String TAG = App.APP_TAG + ActivityNavDrawer.class.getSimpleName();
@@ -116,7 +116,11 @@ public class ActivityNavDrawer extends BaseActivity
     FusedLocation fusedLocation;
     NotificationListAdapter notificationListAdapter;
     FragmentJar fragmentJar = null;
+    FragmentMap fragmentMap = null;
+    FragmentChat fragmentChat = null;
     Call<ResponseBody> callSaveResponseOnCard;
+
+    private boolean fragmentsNotAdded = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -646,15 +650,39 @@ public class ActivityNavDrawer extends BaseActivity
 
     private void setupBottomBar(int position)
     {
+        if (fragmentMap == null)
+        {
+            fragmentMap = new FragmentMap();
+        }
+        if (fragmentJar == null)
+        {
+            fragmentJar = FragmentJar.newInstance(this, this);
+        }
+        if (fragmentChat == null)
+        {
+            fragmentChat = FragmentChat.newInstance();
+        }
+
+        if (fragmentsNotAdded)
+        {
+            fragmentManager.beginTransaction()
+                    .add(R.id.fl_fragmentContainer, fragmentMap)
+                    .add(R.id.fl_fragmentContainer, fragmentJar)
+                    .add(R.id.fl_fragmentContainer, fragmentChat)
+                    .commitAllowingStateLoss();
+            fragmentsNotAdded = false;
+        }
+
         switch (position)
         {
             case 0:
                 if (currentPage != position)
                 {
                     currentPage = position;
-                    fragmentJar = null;
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fl_fragmentContainer, new FragmentMap())
+                            .show(fragmentMap)
+                            .hide(fragmentJar)
+                            .hide(fragmentChat)
                             .commitAllowingStateLoss();
                 }
                 break;
@@ -663,9 +691,10 @@ public class ActivityNavDrawer extends BaseActivity
                 if (currentPage != position)
                 {
                     currentPage = position;
-                    fragmentJar = FragmentJar.newInstance(this, this);
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fl_fragmentContainer, fragmentJar)
+                            .show(fragmentJar)
+                            .hide(fragmentMap)
+                            .hide(fragmentChat)
                             .commitNowAllowingStateLoss();
 
                 }
@@ -675,9 +704,10 @@ public class ActivityNavDrawer extends BaseActivity
                 if (currentPage != position)
                 {
                     currentPage = position;
-                    fragmentJar = null;
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fl_fragmentContainer, FragmentChat.newInstance())
+                            .show(fragmentChat)
+                            .hide(fragmentJar)
+                            .hide(fragmentMap)
                             .commitAllowingStateLoss();
                 }
                 break;
