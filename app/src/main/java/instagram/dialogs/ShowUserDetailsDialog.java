@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ import utils.SharedPreferences;
 
 public class ShowUserDetailsDialog extends Dialog
 {
+    private static final String TAG = App.APP_TAG + ShowUserDetailsDialog.class.getSimpleName();
     final String requestToken;
     @BindView(R.id.iv_instaUserProfilePic)
     ImageView ivInstaUserProfilePic;
@@ -78,6 +80,9 @@ public class ShowUserDetailsDialog extends Dialog
         getWindow().setAttributes(params);
 
         App.getInstance().getUser().getResult().setIsInstagramActivated(true);
+
+        Log.i(TAG, App.getInstance().getUser().getResult().getLocation().getCoordinates().toString());
+        Log.i(TAG, App.getInstance().getUser().getResult().getLocation().getType());
 
         updateUserOnServer();
 

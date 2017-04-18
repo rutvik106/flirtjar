@@ -42,8 +42,14 @@ public class NotificationHandler
         this.remoteMessage = remoteMessage;
         try
         {
-            this.data = new JSONObject(remoteMessage.getData().get("data"));
-            this.extra = new JSONObject(remoteMessage.getData().get("extra"));
+            if (remoteMessage.getData() != null)
+            {
+                this.data = new JSONObject(remoteMessage.getData().get("data"));
+                this.extra = new JSONObject(remoteMessage.getData().get("extra"));
+            } else
+            {
+                Log.i(TAG, "Remote Message Data is NULL");
+            }
         } catch (JSONException e)
         {
             e.printStackTrace();
