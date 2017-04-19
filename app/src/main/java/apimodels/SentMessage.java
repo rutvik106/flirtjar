@@ -1,6 +1,10 @@
 package apimodels;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 
 /**
  * Created by rutvik on 3/15/2017 at 4:21 PM.
@@ -43,7 +47,7 @@ public class SentMessage
     {
     }
 
-    public static class ResultBean
+    public static class ResultBean implements Comparable<ResultBean>
     {
         /**
          * id : 27
@@ -59,7 +63,7 @@ public class SentMessage
         @SerializedName("message_text")
         private String messageText;
         @SerializedName("sent_at")
-        private String sentAt;
+        private Date sentAt;
         @SerializedName("user_from")
         private int userFrom;
         @SerializedName("user_to")
@@ -97,12 +101,12 @@ public class SentMessage
             this.messageText = messageText;
         }
 
-        public String getSentAt()
+        public Date getSentAt()
         {
             return sentAt;
         }
 
-        public void setSentAt(String sentAt)
+        public void setSentAt(Date sentAt)
         {
             this.sentAt = sentAt;
         }
@@ -155,6 +159,12 @@ public class SentMessage
         public void setProfilePicture(String profilePicture)
         {
             this.profilePicture = profilePicture;
+        }
+
+        @Override
+        public int compareTo(@NonNull ResultBean resultBean)
+        {
+            return sentAt.compareTo(resultBean.sentAt);
         }
     }
 }

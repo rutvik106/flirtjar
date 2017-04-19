@@ -28,6 +28,7 @@ public class Constants
     public static final String CHAT_CONTACT_NAME = "CHAT_CONTACT_NAME";
     public static final String INSTA_ACCESS_TOKEN = "INSTA_ACCESS_TOKEN";
     public static final String USER_PROFILE_PICTURE = "USER_PROFILE_PICTURE";
+    public static final String NEW_NOTIFICATION_RECEIVED = "NEW_NOTIFICATION_RECEIVED";
 
     public enum Gender
     {
@@ -171,4 +172,14 @@ public class Constants
     }
 
 
+    public class NotificationType
+    {
+        public static final String FJ_TEAM = "fj_team";
+        public static final String VIEW = "view";
+        public static final String COINS = "coins";
+        public static final String CRUSH_OR_SUPERLIKE = "crush";
+        public static final String LIKE = "like";
+        public static final String USER_MATCH = "match";
+        public static final String GIFT = "gift";
+    }
 }

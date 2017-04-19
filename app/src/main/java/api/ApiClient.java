@@ -1,5 +1,8 @@
 package api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -30,10 +33,14 @@ public class ApiClient
                     .addInterceptor(loggingInterceptor)
                     .build();
 
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
+                    .create();
+
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
                     .client(httpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
 

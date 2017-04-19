@@ -1,7 +1,10 @@
 package apimodels;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +49,7 @@ public class ChatMessages
     {
     }
 
-    public static class ResultBean
+    public static class ResultBean implements Comparable<ResultBean>
     {
         /**
          * id : 29
@@ -54,6 +57,7 @@ public class ChatMessages
          * user_to : {"id":18,"first_name":"Rutvik","last_name":"Mehta","profile_picture":"https://graph.facebook.com/1467849723226234/picture?width=500&height=500"}
          * message_text : string
          * sent_at : 2017-03-15T11:08:00.162141Z
+         * setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'") in retrofit
          */
 
         @SerializedName("id")
@@ -65,7 +69,7 @@ public class ChatMessages
         @SerializedName("message_text")
         private String messageText;
         @SerializedName("sent_at")
-        private String sentAt;
+        private Date sentAt;
 
         public int getId()
         {
@@ -107,14 +111,20 @@ public class ChatMessages
             this.messageText = messageText;
         }
 
-        public String getSentAt()
+        public Date getSentAt()
         {
             return sentAt;
         }
 
-        public void setSentAt(String sentAt)
+        public void setSentAt(Date sentAt)
         {
             this.sentAt = sentAt;
+        }
+
+        @Override
+        public int compareTo(@NonNull ResultBean resultBean)
+        {
+            return sentAt.compareTo(resultBean.sentAt);
         }
 
         public static class UserFromBean

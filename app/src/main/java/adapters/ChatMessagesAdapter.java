@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import apimodels.SentMessage;
@@ -31,6 +32,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter
     {
         itemList.add(0, item);
         notifyItemInserted(0);
+        Collections.sort(itemList);
     }
 
     @Override

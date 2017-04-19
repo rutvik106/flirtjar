@@ -32,4 +32,14 @@ public class DateTime
             return dateToBeConverted;
         }
     }
+
+    public static String convertDate(String inputFormat, String outputFormat, Date dateToBeConverted)
+    {
+        String convertedDate = "";
+        SimpleDateFormat outDateFormat = new SimpleDateFormat(outputFormat, Locale.getDefault());
+        convertedDate = outDateFormat.format(dateToBeConverted);
+        Log.i(App.APP_TAG, "CONVERTED DATE: " + convertedDate);
+        return convertedDate;
+    }
+
 }

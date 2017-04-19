@@ -42,13 +42,16 @@ public class NotificationHandler
         this.remoteMessage = remoteMessage;
         try
         {
-            if (remoteMessage.getData() != null)
+            if (remoteMessage != null)
             {
-                this.data = new JSONObject(remoteMessage.getData().get("data"));
-                this.extra = new JSONObject(remoteMessage.getData().get("extra"));
-            } else
-            {
-                Log.i(TAG, "Remote Message Data is NULL");
+                if (remoteMessage.getData() != null)
+                {
+                    if (remoteMessage.getData().get("data") != null)
+                    {
+                        this.data = new JSONObject(remoteMessage.getData().get("data"));
+                        this.extra = new JSONObject(remoteMessage.getData().get("extra"));
+                    }
+                }
             }
         } catch (JSONException e)
         {

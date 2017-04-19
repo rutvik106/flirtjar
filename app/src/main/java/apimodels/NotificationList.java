@@ -2,6 +2,7 @@ package apimodels;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,11 +62,17 @@ public class NotificationList
         @SerializedName("notification_text")
         private String notificationText;
         @SerializedName("timestamp")
-        private String timestamp;
+        private Date timestamp;
         @SerializedName("notification_type")
         private String notificationType;
         @SerializedName("notification_icon")
         private String notificationIcon;
+        /**
+         * is_seen : false
+         */
+
+        @SerializedName("is_seen")
+        private boolean isSeen;
 
         public int getId()
         {
@@ -87,12 +94,12 @@ public class NotificationList
             this.notificationText = notificationText;
         }
 
-        public String getTimestamp()
+        public Date getTimestamp()
         {
             return timestamp;
         }
 
-        public void setTimestamp(String timestamp)
+        public void setTimestamp(Date timestamp)
         {
             this.timestamp = timestamp;
         }
@@ -115,6 +122,16 @@ public class NotificationList
         public void setNotificationIcon(String notificationIcon)
         {
             this.notificationIcon = notificationIcon;
+        }
+
+        public boolean isIsSeen()
+        {
+            return isSeen;
+        }
+
+        public void setIsSeen(boolean isSeen)
+        {
+            this.isSeen = isSeen;
         }
     }
 }

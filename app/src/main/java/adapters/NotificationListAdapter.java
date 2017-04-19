@@ -2,7 +2,10 @@ package adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
+
+import com.app.flirtjar.App;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,7 @@ import viewholders.VHSingleNotification;
 
 public class NotificationListAdapter extends RecyclerView.Adapter
 {
-
+    public static final String TAG = App.APP_TAG + NotificationListAdapter.class.getSimpleName();
 
     final Context context;
 
@@ -37,6 +40,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
+        Log.i(TAG, "ON CREATE VIEW HOLDER");
         return VHSingleNotification.create(context, parent);
     }
 
@@ -50,7 +54,13 @@ public class NotificationListAdapter extends RecyclerView.Adapter
     @Override
     public int getItemCount()
     {
+        Log.i(TAG, "NOTIFICATION MODEL LIST ITEM COUNT: " + itemList.size());
         return itemList.size();
     }
 
+    public void clear()
+    {
+        itemList.clear();
+        notifyDataSetChanged();
+    }
 }

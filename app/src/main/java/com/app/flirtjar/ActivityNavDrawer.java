@@ -1,8 +1,10 @@
 package com.app.flirtjar;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -119,7 +122,7 @@ public class ActivityNavDrawer extends BaseActivity
     FragmentMap fragmentMap = null;
     FragmentChat fragmentChat = null;
     Call<ResponseBody> callSaveResponseOnCard;
-
+    NewNotificationReceiver newNotificationReceiver;
     private boolean fragmentsNotAdded = true;
 
     @Override
@@ -164,6 +167,8 @@ public class ActivityNavDrawer extends BaseActivity
         NavigationView navigationViewRight = (NavigationView) findViewById(R.id.nav_viewRight);
 
         navigationViewHeaderRight = navigationViewRight.getHeaderView(0);
+
+        navigationViewHeaderRight.setNestedScrollingEnabled(true);
 
         final RecyclerView rvNotifications = (RecyclerView) navigationViewHeaderRight
                 .findViewById(R.id.rv_notifications);
@@ -339,9 +344,11 @@ public class ActivityNavDrawer extends BaseActivity
     private void setupRecyclerViewForNotifications(RecyclerView rvNotifications)
     {
         notificationListAdapter = new NotificationListAdapter(this);
+        rvNotifications.setLayoutManager(new LinearLayoutManager(this));
+        //rvNotifications.setHasFixedSize(true);
         rvNotifications.setAdapter(notificationListAdapter);
-        rvNotifications.setHasFixedSize(true);
         rvNotifications.setItemAnimator(new DefaultItemAnimator());
+        rvNotifications.setNestedScrollingEnabled(true);
     }
 
     @Override
@@ -451,10 +458,12 @@ public class ActivityNavDrawer extends BaseActivity
                         {
                             if (notificationListAdapter != null)
                             {
+                                notificationListAdapter.clear();
                                 for (NotificationList.ResultBean notificationItem :
                                         response.body().getResult())
                                 {
                                     notificationListAdapter.addItem(notificationItem);
+                                    Log.i(TAG, "ADDING NOTIFICATION ITEM: " + notificationItem.getId());
                                 }
                             }
                         }
@@ -833,7 +842,10 @@ public class ActivityNavDrawer extends BaseActivity
 
     private Bundle getFacebookData(JSONObject object)
     {
-
+        if (object == null)
+        {
+            return null;
+        }
         try
         {
             Bundle bundle = new Bundle();
@@ -976,11 +988,26 @@ public class ActivityNavDrawer extends BaseActivity
     @Override
     protected void onStop()
     {
+        if (newNotificationReceiver != null)
+        {
+            unregisterReceiver(newNotificationReceiver);
+        }
         if (!responseOnCards.isEmpty())
         {
             trySavingResponseOnCards();
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if (newNotificationReceiver == null)
+        {
+            newNotificationReceiver = new NewNotificationReceiver();
+            registerReceiver(newNotificationReceiver, new IntentFilter(Constants.NEW_NOTIFICATION_RECEIVED));
+        }
     }
 
     class FacebookProfileTracker extends ProfileTracker
@@ -996,4 +1023,13 @@ public class ActivityNavDrawer extends BaseActivity
         }
     }
 
+    class NewNotificationReceiver extends BroadcastReceiver
+    {
+
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            getNotifications();
+        }
+    }
 }
