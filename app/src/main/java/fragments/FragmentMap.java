@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.flirtjar.ActivityProfileView;
+import com.app.flirtjar.App;
 import com.app.flirtjar.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -34,7 +36,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import api.API;
 import api.ApiInterface;
@@ -53,9 +59,10 @@ import views.RoundedImageView;
  * Created by rutvik on 2/1/2017 at 6:26 PM.
  */
 
-public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener
+public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener
 {
 
+    final Map<String, NearByUser.ResultBean> nearByUserMap = new HashMap<>();
     SyncedMapFragment syncedMapFragment;
     @BindView(R.id.tv_meetUpTo)
     TextView tvMeetUpTo;
@@ -136,6 +143,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             }
         }, this);
 
+        mMap.setOnMarkerClickListener(this);
+
     }
 
     private void getNearByUsers()
@@ -196,7 +205,9 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                         mo.icon(BitmapDescriptorFactory
                                 .fromBitmap(createDrawableFromView(getActivity(), resource, nearByUser)));
 
-                        mMap.addMarker(mo);
+                        final Marker m = mMap.addMarker(mo);
+
+                        nearByUserMap.put(m.getId(), nearByUser);
                     }
                 });
     }
@@ -253,6 +264,23 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         view.draw(canvas);
 
         return bitmap;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker)
+    {
+        NearByUser.ResultBean user = nearByUserMap.get(marker.getId());
+        if (user != null)
+        {
+            if (user.getId() == App.getInstance().getUser().getResult().getId())
+            {
+                ActivityProfileView.start(getActivity(), true, user.getId());
+            } else
+            {
+                ActivityProfileView.start(getActivity(), false, user.getId());
+            }
+        }
+        return true;
     }
 
     class OnGetNearByUsers extends RetrofitCallback<NearByUser>

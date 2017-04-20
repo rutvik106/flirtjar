@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -53,6 +54,8 @@ public class ActivityChat extends BaseActivity
     ChatMessagesAdapter adapter;
 
     Call<SentMessage> call;
+    @BindView(R.id.ll_chatUserDetailsHeader)
+    LinearLayout llChatUserDetailsHeader;
 
     public static void start(final Context context, final int userId, final String chatContactName,
                              final String profilePicture)
@@ -79,6 +82,15 @@ public class ActivityChat extends BaseActivity
                 .into(ivChatUserProfilePicture);
 
         tvNavLogoText.setText(chatContactName);
+
+        llChatUserDetailsHeader.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                ActivityProfileView.start(ActivityChat.this, false, chatContactId);
+            }
+        });
 
         rvChatConversation.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         rvChatConversation.setHasFixedSize(true);
