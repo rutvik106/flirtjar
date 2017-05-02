@@ -62,8 +62,10 @@ public class VHSingleChatMessage extends RecyclerView.ViewHolder
                     .LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.gravity = Gravity.RIGHT;
             vh.tvChatMsgTime.setLayoutParams(params);
+
             vh.tvChatUserName.setText(App.getInstance().getUser().getResult().getFirstName());
             vh.rlMessageContentContainer.setBackground(vh.context.getDrawable(R.drawable.chat_bubble_self));
+
         } else
         {
             vh.llChatMessageContainer.setGravity(Gravity.LEFT);

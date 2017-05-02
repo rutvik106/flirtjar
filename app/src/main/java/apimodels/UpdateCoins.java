@@ -15,6 +15,16 @@ public class UpdateCoins
 
     @SerializedName("coins")
     private int coins;
+    /**
+     * user : 1
+     * operation : add
+     */
+
+    @SerializedName("user")
+    private int user;
+    @SerializedName("operation")
+    private String operation;
+
 
     public int getCoins()
     {
@@ -24,5 +34,25 @@ public class UpdateCoins
     public void setCoins(int coins)
     {
         this.coins = coins;
+    }
+
+    public int getUser()
+    {
+        return user;
+    }
+
+    public void setUser(int user)
+    {
+        this.user = user;
+    }
+
+    public String getOperation()
+    {
+        return operation;
+    }
+
+    public void setOperation(String operation)
+    {
+        this.operation = operation;
     }
 }

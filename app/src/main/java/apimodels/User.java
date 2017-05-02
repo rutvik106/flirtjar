@@ -156,6 +156,8 @@ public class User
         @SerializedName("tags")
         private List<?> tags;
 
+        private int coins;
+
         public static void copy(ResultBean src, ResultBean dest)
         {
             dest.setEyeColor(src.getEyeColor());
@@ -543,6 +545,16 @@ public class User
         public void setTags(List<?> tags)
         {
             this.tags = tags;
+        }
+
+        public int getCoins()
+        {
+            return coins;
+        }
+
+        public void setCoins(int coins)
+        {
+            this.coins = coins;
         }
 
         public static class LocationBean

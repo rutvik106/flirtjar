@@ -56,9 +56,18 @@ public class Constants
 
     public enum Status
     {
-        WALK("walk", "Walk"), COFFEE("coffee", "Coffee"), DRINK("drink", "Drink"),
-        LONG_DRIVE("long_drive", "Long Drive"), LUNCH("lunch", "Lunch"), DINNER("dinner", "Dinner"),
-        DETOUR("detour", "Detour"), MOVIE("movie", "Movie"), NONE("", "Status Not Specified");
+        WALK("walk", "Walk"),
+        COFFEE("coffee", "Coffee"),
+        DRINK("drink", "Drink"),
+        LONG_DRIVE("long_drive", "Long Drive"),
+        LUNCH("lunch", "Lunch"),
+        DINNER("dinner", "Dinner"),
+        DETOUR("detour", "Detour"),
+        MOVIE("movie", "Movie"),
+        BITE("bite", "Grab A Bite"),
+        RUN("run", "Go For Run"),
+        DRUNK("drunk", "Get Drunk"),
+        NONE("", "Status Not Specified");
 
         final String value;
         final String label;

@@ -26,7 +26,6 @@ import com.app.flirtjar.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,8 +45,10 @@ import api.API;
 import api.ApiInterface;
 import api.RetrofitCallback;
 import apimodels.NearByUser;
+import apimodels.UpdateUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 import utils.Constants;
@@ -68,13 +69,13 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
     TextView tvMeetUpTo;
     @BindView(R.id.fam_meetUpTo)
     FloatingActionMenu famMeetUpTo;
-    @BindView(R.id.fab_detour)
-    FloatingActionButton fabDetour;
     @BindView(R.id.fl_blackBackDrop)
     FrameLayout flBlackBackDrop;
     Call<NearByUser> call;
     FusedLocation fusedLocation;
+    String status = null;
     private GoogleMap mMap;
+    private Call<UpdateUser> changingUserStatus;
 
     @Nullable
     @Override
@@ -108,6 +109,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
                 }
             }
         });
+
 
         return view;
     }
@@ -157,6 +159,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         {
             call.cancel();
         }
+
         final int distance = SharedPreferences
                 .Settings.getDistanceSettings(getActivity());
 
@@ -165,8 +168,18 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
 
         final String token = SharedPreferences.getFlirtjarUserToken(getActivity());
 
-        call = API.Location
-                .getNearByUsers(distance, locationUnit, token, new OnGetNearByUsers(getActivity()));
+        if (status == null)
+        {
+            call = API.Location
+                    .getNearByUsers(distance, locationUnit, token,
+                            new OnGetNearByUsers(getActivity()));
+        } else
+        {
+            call = API.Location
+                    .getNearByUsersByStatus(distance, locationUnit, status, token,
+                            new OnGetNearByUsers(getActivity()));
+        }
+
 
     }
 
@@ -219,7 +232,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         {
             return null;
         }
-        final View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_marker, null);
+        final View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                .inflate(R.layout.custom_marker, null);
         final RoundedImageView ivPushPinImage = (RoundedImageView) view.findViewById(R.id.iv_pushPinImage);
         ivPushPinImage.setImageBitmap(bmp);
 
@@ -227,22 +241,27 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         final String status = nearByUser.getStatus();
         if (!status.isEmpty())
         {
-            if (status.equals(Constants.Status.DETOUR.getValue()))
+            if (status.equalsIgnoreCase(Constants.Status.DETOUR.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_detour);
-            } else if (status.contains("out"))
+
+            } else if (status.equalsIgnoreCase(Constants.Status.RUN.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_go_out);
-            } else if (status.equals(Constants.Status.MOVIE.getValue()))
+
+            } else if (status.equalsIgnoreCase(Constants.Status.MOVIE.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_movie);
-            } else if (status.equals(Constants.Status.DRINK.getValue()))
+
+            } else if (status.equalsIgnoreCase(Constants.Status.DRUNK.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_drunk);
-            } else if (status.contains("run"))
+
+            } else if (status.equalsIgnoreCase(Constants.Status.RUN.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_run);
-            } else if (status.contains("bite"))
+
+            } else if (status.equalsIgnoreCase(Constants.Status.BITE.getValue()))
             {
                 pushPin.setImageResource(R.drawable.ic_map_pointer_bite);
             }
@@ -283,6 +302,73 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
         return true;
     }
 
+    @OnClick({R.id.fab_grabBite, R.id.fab_goFroRun, R.id.fab_getDrunk, R.id.fab_catchMovie, R.id.fab_goOut, R.id.fab_detour})
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.fab_grabBite:
+                status = Constants.Status.BITE.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+            case R.id.fab_goFroRun:
+                status = Constants.Status.RUN.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+            case R.id.fab_getDrunk:
+                status = Constants.Status.DRUNK.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+            case R.id.fab_catchMovie:
+                status = Constants.Status.MOVIE.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+            case R.id.fab_goOut:
+                status = Constants.Status.RUN.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+            case R.id.fab_detour:
+                status = Constants.Status.DETOUR.getValue();
+                updateUserStatusAndGetNearBy();
+                break;
+        }
+    }
+
+    private void updateUserStatusAndGetNearBy()
+    {
+        App.getInstance().getUser().getResult().setStatus(status);
+        if (changingUserStatus != null)
+        {
+            changingUserStatus.cancel();
+        }
+        changingUserStatus = API.User.updateUserDetails(App.getInstance().getUser().getResult(),
+                SharedPreferences.getFlirtjarUserToken(getActivity()),
+                new RetrofitCallback<UpdateUser>(getActivity())
+                {
+                    @Override
+                    public void onResponse(Call<UpdateUser> call, Response<UpdateUser> response)
+                    {
+                        super.onResponse(call, response);
+                        if (response.isSuccessful())
+                        {
+                            getNearByUsers();
+                        }
+                    }
+                });
+
+        famClose();
+    }
+
+    public boolean famOpen()
+    {
+        return famMeetUpTo.isOpened();
+    }
+
+    public void famClose()
+    {
+        famMeetUpTo.close(true);
+    }
+
     class OnGetNearByUsers extends RetrofitCallback<NearByUser>
     {
 
@@ -297,6 +383,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleA
             super.onResponse(call, response);
             if (response.isSuccessful())
             {
+                mMap.clear();
                 for (NearByUser.ResultBean nearByUser : response.body().getResult())
                 {
                     setPushPinWithPic(nearByUser);

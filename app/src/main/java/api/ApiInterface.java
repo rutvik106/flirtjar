@@ -127,7 +127,10 @@ public interface ApiInterface
 
         enum ResponseType
         {
-            LIKES(0), SKIPPED(1), SUPERLIKE(2), VIEWS(3);
+            LIKES(0),
+            SKIPPED(1),
+            SUPERLIKE(2),
+            VIEWS(3);
 
             final int value;
 
@@ -151,6 +154,12 @@ public interface ApiInterface
         Call<NearByUser> getNearByUsers(@Path("distance") int distance,
                                         @Path("unit") String unit,
                                         @Header(Constants.AUTHORIZATION) String token);
+
+        @GET("location/nearby/{distance}/{unit}/")
+        Call<NearByUser> getNearByUsersByStatus(@Path("distance") int distance,
+                                                @Path("unit") String unit,
+                                                @Query("status") String status,
+                                                @Header(Constants.AUTHORIZATION) String token);
 
         enum LocationUnit
         {

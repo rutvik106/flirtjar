@@ -20,6 +20,7 @@ import apimodels.ResponseOnCard;
 import apimodels.SendChatMessage;
 import apimodels.SendGift;
 import apimodels.SentMessage;
+import apimodels.UpdateCoins;
 import apimodels.UpdateUser;
 import apimodels.Views;
 import instagram.InstaConstants;
@@ -158,6 +159,15 @@ public class API
             return call;
         }
 
+        public static Call<Coins> putCoins(final UpdateCoins coins,
+                                           final String token,
+                                           final RetrofitCallback<Coins> callback)
+        {
+            Call<Coins> call = profile.updateCoins(coins, Constants.CONTENT_TYPE_JSON, token);
+            call.enqueue(callback);
+            return call;
+        }
+
         public static Call<SendGift> sendGift(SendGift.ResultBean gift,
                                               String token, RetrofitCallback<SendGift> callback)
         {
@@ -182,6 +192,21 @@ public class API
             Call<NearByUser> call = location
                     .getNearByUsers(distance,
                             unit.getValue(),
+                            token);
+            call.enqueue(callback);
+            return call;
+        }
+
+        public static Call<NearByUser> getNearByUsersByStatus(int distance,
+                                                              ApiInterface.Location.LocationUnit unit,
+                                                              String status,
+                                                              String token,
+                                                              RetrofitCallback<NearByUser> callback)
+        {
+            Call<NearByUser> call = location
+                    .getNearByUsersByStatus(distance,
+                            unit.getValue(),
+                            status,
                             token);
             call.enqueue(callback);
             return call;

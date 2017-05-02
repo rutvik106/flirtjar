@@ -164,7 +164,7 @@ public class SentMessage
         @Override
         public int compareTo(@NonNull ResultBean resultBean)
         {
-            return sentAt.compareTo(resultBean.sentAt);
+            return resultBean.sentAt.compareTo(sentAt);
         }
     }
 }

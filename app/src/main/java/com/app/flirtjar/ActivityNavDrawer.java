@@ -177,7 +177,21 @@ public class ActivityNavDrawer extends BaseActivity
 
         toggleLeft = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        {
+
+            @Override
+            public void onDrawerStateChanged(int newState)
+            {
+                if (newState == DrawerLayout.STATE_SETTLING)
+                {
+                    if (App.getInstance().getUser() != null)
+                    {
+                        getUserFlirtCoins();
+                    }
+                }
+            }
+        };
         drawer.setDrawerListener(toggleLeft);
         toggleLeft.syncState();
 
@@ -282,6 +296,7 @@ public class ActivityNavDrawer extends BaseActivity
                 }
             }
         });
+
     }
 
     private void tryLinkingInstagramAccount()
@@ -514,6 +529,7 @@ public class ActivityNavDrawer extends BaseActivity
                 super.onResponse(call, response);
                 if (response.isSuccessful())
                 {
+                    App.getInstance().getUser().getResult().setCoins(response.body().getResult().getCoins());
                     tvUserCoins.setText(response.body().getResult().getCoins() + "");
                 }
             }
@@ -733,7 +749,19 @@ public class ActivityNavDrawer extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else
         {
-            super.onBackPressed();
+            if (fragmentMap != null)
+            {
+                if (fragmentMap.famOpen())
+                {
+                    fragmentMap.famClose();
+                } else
+                {
+                    super.onBackPressed();
+                }
+            } else
+            {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -991,6 +1019,7 @@ public class ActivityNavDrawer extends BaseActivity
         if (newNotificationReceiver != null)
         {
             unregisterReceiver(newNotificationReceiver);
+            newNotificationReceiver = null;
         }
         if (!responseOnCards.isEmpty())
         {
@@ -1032,4 +1061,5 @@ public class ActivityNavDrawer extends BaseActivity
             getNotifications();
         }
     }
+
 }

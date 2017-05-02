@@ -5,12 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import api.API;
+import api.RetrofitCallback;
+import apimodels.Coins;
+import apimodels.UpdateCoins;
+import retrofit2.Call;
+import retrofit2.Response;
 import util.IabHelper;
 import util.IabResult;
 import util.Inventory;
 import util.Purchase;
 import utils.InAppPurchaseConstants;
+import utils.SharedPreferences;
 
 public class ActivityPurchaseCoins extends Activity
 {
@@ -61,7 +69,54 @@ public class ActivityPurchaseCoins extends Activity
                         return;
                     } else if (purchase.getSku().equals(itemSku))
                     {
-                        consumeItem();
+                        final UpdateCoins coins = new UpdateCoins();
+                        final String token = SharedPreferences
+                                .getFlirtjarUserToken(ActivityPurchaseCoins.this);
+
+                        final RetrofitCallback<Coins> onPutCoins =
+                                new RetrofitCallback<Coins>(ActivityPurchaseCoins.this)
+                                {
+                                    @Override
+                                    public void onResponse(Call<Coins> call, Response<Coins> response)
+                                    {
+                                        super.onResponse(call, response);
+                                        if (response.isSuccessful())
+                                        {
+                                            Toast.makeText(ActivityPurchaseCoins.this, "Coins Added.", Toast.LENGTH_SHORT).show();
+                                            App.getInstance().getUser().getResult().setCoins(response.body().getResult().getCoins());
+                                            finish();
+                                        } else
+                                        {
+                                            Toast.makeText(ActivityPurchaseCoins.this, "Something went wrong while adding coins.", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Coins> call, Throwable t)
+                                    {
+                                        super.onFailure(call, t);
+                                        Toast.makeText(ActivityPurchaseCoins.this, "Failed to add coins.", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                };
+
+                        if (itemSku.equals(InAppPurchaseConstants.ItemSku.COINS_30))
+                        {
+                            coins.setCoins(30);
+                            API.Profile.putCoins(coins, token, onPutCoins);
+                        } else if (itemSku.equals(InAppPurchaseConstants.ItemSku.COINS_100))
+                        {
+                            coins.setCoins(100);
+                            API.Profile.putCoins(coins, token, onPutCoins);
+                        } else if (itemSku.equals(InAppPurchaseConstants.ItemSku.COINS_250))
+                        {
+                            coins.setCoins(250);
+                            API.Profile.putCoins(coins, token, onPutCoins);
+                        }
+
+
+                        //consumeItem();
                     }
                 }
             };
