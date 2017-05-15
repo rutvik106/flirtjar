@@ -1,3 +1,4 @@
 /build
-/src/main/java/utils/BillingDetailsConstants.java
+src/main/java/utils/BillingDetailsConstants.java
+src/main/java/utils/InAppPurchaseConstants.java
 /src/main/java/utils/InAppPurchaseConstants.java

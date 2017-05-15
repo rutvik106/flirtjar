@@ -1,11 +1,14 @@
 package com.app.flirtjar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -180,6 +183,19 @@ public class ActivityChat extends BaseActivity
         if (item.getItemId() == android.R.id.home)
         {
             finish();
+        } else if (item.getItemId() == R.id.action_deleteChat)
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete chat conversations?")
+                    .setPositiveButton("Delete", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            Toast.makeText(ActivityChat.this, "Messages deleted successfully.", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Cancel", null).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -231,4 +247,12 @@ public class ActivityChat extends BaseActivity
         }
         super.onDestroy();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.activity_chat_menu, menu);
+        return true;
+    }
+
 }

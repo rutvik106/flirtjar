@@ -7,8 +7,8 @@
 /build
 /captures
 .externalNativeBuild
-/app/src/main/java/utils/BillingDetailsConstants.java
-/app/src/main/java/utils/InAppPurchaseConstants.java
+src/main/java/utils/BillingDetailsConstants.java
+src/main/java/utils/InAppPurchaseConstants.java
 libs/
 src/androidTest/
 src/main/res/drawable-hdpi/ic_arrow_back_black_36dp.png
@@ -57,3 +57,9 @@ src/main/res/drawable/insta_logo.png
 src/main/res/drawable/kitty.png
 src/main/res/drawable/place_holder.jpg
 src/test/
+src/main/res/drawable-hdpi/ic_delete_black_48dp.png
+src/main/res/drawable-mdpi/ic_delete_black_48dp.png
+src/main/res/drawable-xhdpi/ic_delete_black_48dp.png
+src/main/res/drawable-xxhdpi/ic_delete_black_48dp.png
+src/main/res/drawable-xxxhdpi/ic_delete_black_48dp.png
+/app/src/main/java/utils/InAppPurchaseConstants.java

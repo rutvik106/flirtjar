@@ -30,7 +30,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginRight="60dp"
                 android:layout_marginTop="25dp"
                 android:contentInsetEnd="0dp"
                 android:contentInsetLeft="0dp"
@@ -61,7 +60,6 @@
                         android:id="@+id/tv_navLogoText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingTop="5dp"
                         android:textColor="#ffffff"
                         android:textSize="26sp"
                         android:typeface="monospace"/>
