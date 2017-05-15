@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.app.flirtjar.R;
@@ -26,8 +25,6 @@ public class VHSingleGridUser extends RecyclerView.ViewHolder
     final Context context;
     @BindView(R.id.iv_gridUserImage)
     ImageButton ivGridUserImage;
-    @BindView(R.id.fl_itemLockedView)
-    FrameLayout flItemLockedView;
 
     GridUsers.ResultBean user;
 
